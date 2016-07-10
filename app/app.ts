@@ -1,10 +1,13 @@
-import {Component} from '@angular/core';
-import {Platform, ionicBootstrap} from 'ionic-angular';
-import {StatusBar} from 'ionic-native';
-import {WelcomePage} from './pages/welcome/welcome';
+import { Component } from '@angular/core';
+import { Platform , ionicBootstrap} from 'ionic-angular';
+import { StatusBar } from 'ionic-native';
+import { WelcomePage } from './pages/welcome/welcome';
+
+import { AuthService } from './services/auth.service';
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  providers: [AuthService]
 })
 export class MyApp {
 
