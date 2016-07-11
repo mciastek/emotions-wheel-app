@@ -8,6 +8,5 @@ import 'rxjs/add/operator/map';
 })
 export class HomePage {
   constructor(private navController: NavController, private http: Http) {
-    // this.http.get(this.config.api).map(res => res.json()).subscribe(data => console.log(data));
   }
 }
