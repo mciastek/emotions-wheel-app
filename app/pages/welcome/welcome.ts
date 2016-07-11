@@ -1,19 +1,35 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs/Observable';
+
 import { NavController, Toast } from 'ionic-angular';
-import { BarcodeScanner } from 'ionic-native';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService, AuthResponse } from '../../services/auth.service';
 
-import { HomePage } from '../home/home';
+import { Participant, Experiment } from '../../models';
+import { AppState, getParticipant, getExperiment } from '../../reducers';
+import { ParticipantActions, ExperimentActions } from '../../actions';
+
+import { ParticipantWelcomeComponent, GeneralWelcomeComponent } from '../../components';
 
 @Component({
-  templateUrl: 'build/pages/welcome/welcome.html'
+  templateUrl: 'build/pages/welcome/welcome.html',
+  directives: [ParticipantWelcomeComponent, GeneralWelcomeComponent]
 })
 export class WelcomePage implements OnInit {
-  public barcode: String
+  public isLogged: Boolean = false;
+  public participant$: Observable<Participant>;
+  public experiment$: Observable<Experiment>;
 
-  constructor(private nav: NavController, private authService: AuthService) {
+  constructor(
+    private nav: NavController,
+    private authService: AuthService,
+    private store: Store<AppState>,
+    private experimentActions: ExperimentActions,
+    private participantActions: ParticipantActions) {
 
+    this.participant$ = this.store.let(getParticipant());
+    this.experiment$ = this.store.let(getExperiment());
   }
 
   ngOnInit() {
@@ -24,7 +40,7 @@ export class WelcomePage implements OnInit {
     }
   }
 
-  errorToast(message) {
+  setToast(message) {
     return Toast.create({
       message: message,
       position: 'bottom',
@@ -33,32 +49,43 @@ export class WelcomePage implements OnInit {
     });
   }
 
-  turnScanner() {
-    BarcodeScanner.scan()
-      .then(this.scanSuccess.bind(this))
-      .catch(this.scanError.bind(this));
-  }
-
-  scanSuccess({ text }) {
-    if (text) {
-      this.authenticateWithToken(text);
+  scanSuccess({ token }) {
+    if (token) {
+      this.authenticateWithToken(token, () => {
+        this.nav.present(this.setToast('Success'));
+      });
     } else {
-      this.nav.present(this.errorToast('QR code is invalid'));
+      this.nav.present(this.setToast('QR code is invalid'));
     }
   }
 
   scanError(err) {
-    this.nav.present(this.errorToast(err));
+    this.nav.present(this.setToast(err));
   }
 
-  authenticateWithToken(token) {
+  authenticateWithToken(token, onSuccess?) {
     this.authService.authenticate(token)
-      .subscribe(() => {
+      .subscribe((data: AuthResponse) => {
+        this.setParticipant(data.participant);
+        this.setExperiment(data.experiment);
+
         localStorage.setItem('token', token);
-        this.nav.push(HomePage);
+        this.isLogged = true;
+
+        if (onSuccess) {
+          onSuccess();
+        }
       }, (err) => {
-        this.nav.present(this.errorToast(err))
+        this.nav.present(this.setToast(err))
       });
+  }
+
+  setParticipant(participant) {
+    this.store.dispatch(this.participantActions.loadParticipant(participant));
+  }
+
+  setExperiment(experiment) {
+    this.store.dispatch(this.experimentActions.loadExperiment(experiment));
   }
 
 }

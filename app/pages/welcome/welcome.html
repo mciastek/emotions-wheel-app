@@ -1,6 +1,6 @@
 <ion-content padding fullscreen="true">
   <div class="fullscreen-center">
-    <h1>Welcome</h1>
-    <button outline (click)="turnScanner()">Log in</button>
+    <general-welcome (scanSuccess)="scanSuccess($event)" (scanError)="scanError($event)" *ngIf="!isLogged"></general-welcome>
+    <participant-welcome [participant]="participant$ | async" [experiment]="experiment$ | async" *ngIf="isLogged"></participant-welcome>
   </div>
 </ion-content>

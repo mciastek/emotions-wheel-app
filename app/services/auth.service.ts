@@ -5,6 +5,13 @@ import 'rxjs/add/operator/map';
 
 import config from '../config';
 
+import { Participant, Experiment } from '../models';
+
+export interface AuthResponse {
+  participant: Participant;
+  experiment: Experiment;
+}
+
 @Injectable()
 export class AuthService {
   constructor(public http: Http) {
