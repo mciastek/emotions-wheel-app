@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter} from '@angular/core';
 
 import { Participant, Experiment } from '../../models';
 
@@ -9,6 +9,12 @@ import { Participant, Experiment } from '../../models';
 export class ParticipantWelcomeComponent {
   @Input() participant: Participant;
   @Input() experiment: Experiment;
+
+  @Output() startExperiment = new EventEmitter();
+
+  onButtonClick() {
+    this.startExperiment.emit({});
+  }
 
   get fullName() {
     return `${this.participant.first_name} ${this.participant.last_name}`;
