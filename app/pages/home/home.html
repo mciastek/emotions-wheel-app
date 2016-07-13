@@ -1,6 +1,5 @@
-<experiment-toolbar [participant]="participant$ | async" [experiment]="experiment$ | async"></experiment-toolbar>
-
-<ion-grid>
+<ion-content>
+  <experiment-toolbar [participant]="participant$ | async" [experiment]="experiment$ | async"></experiment-toolbar>
   <ion-row>
     <ion-col width-75>
       <emotions-wheel></emotions-wheel>
@@ -8,4 +7,4 @@
 
     <ion-col width-25></ion-col>
   </ion-row>
-</ion-grid>
+</ion-content>
