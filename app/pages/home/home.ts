@@ -7,11 +7,19 @@ import { NavController } from 'ionic-angular';
 import { Participant, Experiment } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
 
-import { EmotionsWheelComponent, ExperimentToolbarComponent } from '../../components';
+import {
+  EmotionsWheelComponent,
+  ExperimentToolbarComponent,
+  PhotoSidebarComponent
+} from '../../components';
 
 @Component({
   templateUrl: 'build/pages/home/home.html',
-  directives: [EmotionsWheelComponent, ExperimentToolbarComponent]
+  directives: [
+    EmotionsWheelComponent,
+    ExperimentToolbarComponent,
+    PhotoSidebarComponent
+  ]
 })
 export class HomePage {
   public participant$: Observable<Participant>;
