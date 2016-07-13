@@ -12,6 +12,8 @@ import { ParticipantActions, ExperimentActions } from '../../actions';
 
 import { ParticipantWelcomeComponent, GeneralWelcomeComponent } from '../../components';
 
+import { HomePage } from '../home/home.ts';
+
 @Component({
   templateUrl: 'build/pages/welcome/welcome.html',
   directives: [ParticipantWelcomeComponent, GeneralWelcomeComponent]
@@ -57,6 +59,10 @@ export class WelcomePage implements OnInit {
     } else {
       this.nav.present(this.setToast('QR code is invalid'));
     }
+  }
+
+  startExperiment() {
+    this.nav.push(HomePage);
   }
 
   scanError(err) {
