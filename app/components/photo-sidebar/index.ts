@@ -1,10 +1,13 @@
 import { Component, Input } from '@angular/core';
 
-import { Participant, Experiment } from '../../models';
+import { Participant, Experiment, Photo } from '../../models';
 
 @Component({
   selector: 'photo-sidebar',
   templateUrl: 'build/components/photo-sidebar/template.html'
 })
 export class PhotoSidebarComponent {
+  @Input() photos: Photo[];
+
+  public remainingPhotos: Photo[];
 }

@@ -1,3 +1,5 @@
-<ul>
-  <li></li>
-</ul>
+<ion-row class="photo-sidebar__list">
+  <ion-col width-50 *ngFor="let photo of photos" class="photo-sidebar__item">
+    <img src="{{photo.thumb}}" alt="{{photo.name}}" />
+  </ion-col>
+</ion-row>

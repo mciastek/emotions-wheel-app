@@ -1,7 +1,8 @@
 export interface Photo {
   id: number;
   name: string;
-  url: string;
+  original: string;
+  thumb: string;
   author_type: string;
   author_id: string;
 }
