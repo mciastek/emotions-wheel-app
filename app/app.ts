@@ -8,7 +8,7 @@ import actions from './actions';
 
 import { AuthService } from './services/auth.service';
 
-import { WelcomePage } from './pages/welcome/welcome';
+import { WelcomePage } from './pages/welcome';
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>',

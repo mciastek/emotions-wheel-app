@@ -12,10 +12,10 @@ import { ParticipantActions, ExperimentActions } from '../../actions';
 
 import { ParticipantWelcomeComponent, GeneralWelcomeComponent } from '../../components';
 
-import { HomePage } from '../home/home.ts';
+import { HomePage } from '../home/';
 
 @Component({
-  templateUrl: 'build/pages/welcome/welcome.html',
+  templateUrl: 'build/pages/welcome/template.html',
   directives: [ParticipantWelcomeComponent, GeneralWelcomeComponent]
 })
 export class WelcomePage implements OnInit {

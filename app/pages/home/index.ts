@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs/Observable';
+import { Observable, Subscribable } from 'rxjs/Observable';
 
 import { NavController } from 'ionic-angular';
 
-import { Participant, Experiment } from '../../models';
+import { Participant, Experiment, Photo } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
 
 import {
@@ -14,7 +14,7 @@ import {
 } from '../../components';
 
 @Component({
-  templateUrl: 'build/pages/home/home.html',
+  templateUrl: 'build/pages/home/template.html',
   directives: [
     EmotionsWheelComponent,
     ExperimentToolbarComponent,
@@ -24,9 +24,14 @@ import {
 export class HomePage {
   public participant$: Observable<Participant>;
   public experiment$: Observable<Experiment>;
+  public photos: Photo[];
 
   constructor(private navController: NavController, private store: Store<AppState>) {
     this.participant$ = this.store.let(getParticipant());
     this.experiment$ = this.store.let(getExperiment());
+
+    this.experiment$.map((e) => e.photos).subscribe((photos) => {
+      return this.photos = photos;
+    });
   }
 }
