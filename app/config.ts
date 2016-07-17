@@ -1,3 +1,4 @@
 export default {
-  api: 'http://localhost:4000/api/v1/'
+  api: 'http://192.168.1.10:4000/api/v1/',
+  socket: 'ws://192.168.1.10:4000/socket'
 }
