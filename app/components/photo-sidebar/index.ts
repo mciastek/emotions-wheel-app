@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { Participant, Experiment, Photo } from '../../models';
+import { Photo } from '../../models';
 
 @Component({
   selector: 'photo-sidebar',

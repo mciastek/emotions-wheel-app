@@ -6,13 +6,13 @@ import { provideStore } from '@ngrx/store';
 import reducer from './reducers';
 import actions from './actions';
 
-import { AuthService, SocketService } from './services';
+import { AuthService, DraggableService } from './services';
 
 import { WelcomePage } from './pages/welcome';
 
 @Component({
   template: '<ion-nav [root]="rootPage"></ion-nav>',
-  providers: [AuthService, SocketService]
+  providers: [AuthService, DraggableService]
 })
 export class MyApp {
 
