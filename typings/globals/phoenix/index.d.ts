@@ -1,12 +1,21 @@
-declare namespace Phoenix {
+declare module "phoenix" {
+  class Push {
+    constructor(channel: Channel, event: string, payload: any, timeout: number);
+
+    resend(timeout: number): void;
+    send(): void;
+
+    receive(status: string, callback: Function): Push;
+  }
+
   export class Socket {
-    constructor(endPoint: string, opts?: Object): Socket;
+    constructor(endPoint: string, opts?: Object);
 
     protocol(): string;
     endPointURL(): string;
 
     disconnect(callback: Function, code: string, reason: any): void;
-    connect(params: any): void;
+    connect(params?: any): void;
 
     log(kind: string, msg: string, data: any): void;
 
@@ -26,16 +35,16 @@ declare namespace Phoenix {
     isConnected(): boolean;
 
     remove(channel: Channel): void;
-    channel(topic: string, chanParams: Object): Channel;
+    channel(topic: string, chanParams?: Object): Channel;
 
     push(data: any): void;
   }
 
   export class Channel {
-    constructor(topic: string, params?: Object, socket?: Socket): Channel;
+    constructor(topic: string, params?: Object, socket?: Socket);
 
-    join(timeout?: number): void;
-    leave(timeout?: number): void;
+    join(timeout?: number): Push;
+    leave(timeout?: number): Push;
 
     onClose(callback: Function): void;
     onError(callback: Function): void;
@@ -55,10 +64,4 @@ declare namespace Phoenix {
 
     list(presences: any, chooser: Function): any;
   }
-}
-
-declare module "phoenix" {
-  export class Socket extends Phoenix.Socket {};
-  export class Channel extends Phoenix.Channel {};
-  export var Presence = Phoenix.Presence;
 }
