@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import Phoenix from 'phoenix';
+import { Socket } from 'phoenix';
 
 import config from '../config';
 
@@ -9,6 +9,10 @@ export class SocketService {
   public socket;
 
   constructor() {
-    this.socket = new Phoenix.Socket(config.socket);
+    this.socket = new Socket(config.socket);
+  }
+
+  connect() {
+    this.socket.connect();
   }
 }
