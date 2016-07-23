@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscribable } from 'rxjs/Observable';
+import 'rxjs/add/operator/zip';
+import 'rxjs/add/operator/take';
 
 import { NavController } from 'ionic-angular';
 
@@ -8,6 +10,7 @@ import { DraggableService } from '../../services';
 
 import { Participant, Experiment, Photo } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
+import { RatesActions } from '../../actions';
 
 import {
   EmotionsWheelComponent,
@@ -31,7 +34,8 @@ export class HomePage implements OnInit {
   constructor(
     private navController: NavController,
     private store: Store<AppState>,
-    private draggableService: DraggableService
+    private draggableService: DraggableService,
+    private ratesActions: RatesActions
   ) {
     this.participant$ = this.store.let(getParticipant());
     this.experiment$ = this.store.let(getExperiment());
@@ -39,9 +43,24 @@ export class HomePage implements OnInit {
     this.experiment$.map((e) => e.photos).subscribe((photos) => {
       return this.photos = photos;
     });
+
+    this.connectToExperimentChannel();
   }
 
   ngOnInit() {
     this.draggableService.init('.js-dropzone', '.js-draggable');
+
+    this.connectToExperimentChannel();
+  }
+
+  connectToExperimentChannel() {
+    const participantIdObserver: Observable<number> = this.participant$.map(p => p.id);
+    const experimentIdObserver: Observable<number> = this.experiment$.map(e => e.id);
+
+    this.store.dispatch(this.ratesActions.connectSocket());
+
+    participantIdObserver.zip(experimentIdObserver).subscribe(([eid, pid]) => {
+      this.store.dispatch(this.ratesActions.joinChannel(pid, eid));
+    });
   }
 }

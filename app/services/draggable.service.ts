@@ -41,8 +41,7 @@ export class DraggableService {
     x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx,
     y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
 
-    target.style.webkitTransform =
-    target.style.transform = `translate(${x}px, ${y}px)`;
+    target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0)`;
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);

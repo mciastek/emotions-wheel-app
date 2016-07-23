@@ -7,3 +7,9 @@ export {
   SocketService,
   DraggableService
 };
+
+export default [
+  AuthService,
+  SocketService,
+  DraggableService
+];

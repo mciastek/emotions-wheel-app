@@ -7,6 +7,7 @@
     "@angular/platform-browser": "2.0.0-rc.3",
     "@angular/platform-browser-dynamic": "2.0.0-rc.3",
     "@ngrx/core": "^1.0.1",
+    "@ngrx/effects": "^1.0.1",
     "@ngrx/store": "^2.0.1",
     "es6-shim": "^0.35.0",
     "interact.js": "^1.2.6",

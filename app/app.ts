@@ -2,17 +2,17 @@ import { Component } from '@angular/core';
 import { Platform , ionicBootstrap} from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { provideStore } from '@ngrx/store';
+import { runEffects } from '@ngrx/effects';
 
 import reducer from './reducers';
 import actions from './actions';
-
-import { AuthService, DraggableService } from './services';
+import effects from './effects';
+import services from './services';
 
 import { WelcomePage } from './pages/welcome';
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
-  providers: [AuthService, DraggableService]
+  template: '<ion-nav [root]="rootPage"></ion-nav>'
 })
 export class MyApp {
 
@@ -31,5 +31,7 @@ export class MyApp {
 
 ionicBootstrap(MyApp, [
   provideStore(reducer),
-  actions
+  services,
+  actions,
+  runEffects(effects)
 ]);
