@@ -6,7 +6,6 @@ import { runEffects } from '@ngrx/effects';
 
 import reducer from './reducers';
 import actions from './actions';
-import effects from './effects';
 import services from './services';
 
 import { WelcomePage } from './pages/welcome';
@@ -32,6 +31,5 @@ export class MyApp {
 ionicBootstrap(MyApp, [
   provideStore(reducer),
   services,
-  actions,
-  runEffects(effects)
+  actions
 ]);
