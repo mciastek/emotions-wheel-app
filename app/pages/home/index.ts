@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import 'rxjs/add/operator/zip';
-import 'rxjs/add/operator/take';
 
 import { NavController } from 'ionic-angular';
 
@@ -12,21 +11,18 @@ import { Participant, Experiment, Photo } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
 import { RatesActions } from '../../actions';
 
-import {
-  EmotionsWheelComponent,
-  ExperimentToolbarComponent,
-  PhotoSidebarComponent
-} from '../../components';
+import { ExperimentToolbarComponent } from '../../components';
+
+import { ExperimentBoard } from '../../containers';
 
 @Component({
   templateUrl: 'build/pages/home/template.html',
   directives: [
-    EmotionsWheelComponent,
     ExperimentToolbarComponent,
-    PhotoSidebarComponent
+    ExperimentBoard
   ]
 })
-export class HomePage implements OnInit {
+export class HomePage {
   public participant$: Observable<Participant>;
   public experiment$: Observable<Experiment>;
   public photos: Photo[];
@@ -42,25 +38,6 @@ export class HomePage implements OnInit {
 
     this.experiment$.map((e) => e.photos).subscribe((photos) => {
       return this.photos = photos;
-    });
-
-    this.connectToExperimentChannel();
-  }
-
-  ngOnInit() {
-    this.draggableService.init('.js-dropzone', '.js-draggable');
-
-    this.connectToExperimentChannel();
-  }
-
-  connectToExperimentChannel() {
-    const participantIdObserver: Observable<number> = this.participant$.map(p => p.id);
-    const experimentIdObserver: Observable<number> = this.experiment$.map(e => e.id);
-
-    this.store.dispatch(this.ratesActions.connectSocket());
-
-    participantIdObserver.zip(experimentIdObserver).subscribe(([eid, pid]) => {
-      this.store.dispatch(this.ratesActions.joinChannel(pid, eid));
     });
   }
 }

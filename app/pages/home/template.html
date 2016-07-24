@@ -1,12 +1,4 @@
 <ion-content>
   <experiment-toolbar [participant]="participant$ | async" [experiment]="experiment$ | async"></experiment-toolbar>
-  <ion-row>
-    <ion-col width-75 class="js-dropzone">
-      <emotions-wheel></emotions-wheel>
-    </ion-col>
-
-    <ion-col width-25>
-      <photo-sidebar [photos]="photos"></photo-sidebar>
-    </ion-col>
-  </ion-row>
+  <experiment-board [participant]="participant$ | async" [experiment]="experiment$ | async" [photos]="photos"></experiment-board>
 </ion-content>
