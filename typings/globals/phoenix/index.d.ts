@@ -55,7 +55,6 @@ declare module "phoenix" {
     canPush(): boolean;
 
     push(event: string, payload: Object, timeout?: number): void;
-    receive(eventName: string, callback: Function)
   }
 
   export var Presence: {

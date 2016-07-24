@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+import { Photo, Rate } from '../../models';
 
 import { WheelLabelsComponent } from '../wheel-labels';
 
@@ -8,5 +10,6 @@ import { WheelLabelsComponent } from '../wheel-labels';
   directives: [WheelLabelsComponent]
 })
 export class EmotionsWheelComponent {
-  constructor() {}
+  @Input() photos: Photo[];
+  @Input() rates: Rate[];
 }
