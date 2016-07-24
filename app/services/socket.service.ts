@@ -19,10 +19,10 @@ export class SocketService {
 
   join(topic, params?) {
     this.channel = this.socket.channel(topic, params);
-    this.channel.join();
+    return this.channel.join();
   }
 
   leave() {
-    this.channel.leave();
+    return this.channel.leave();
   }
 }

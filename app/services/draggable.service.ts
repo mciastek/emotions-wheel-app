@@ -7,12 +7,22 @@ export class DraggableService {
   private draggableSelector: string;
   private dropZoneSelector: string;
 
+  public onDragStart: Function;
+  public onDragEnd: Function;
+  public onDrop: Function;
+
   constructor() {}
 
-  init(dropZoneSelector, draggableSelector) {
+  init(dropZoneSelector, draggableSelector, params?) {
     this.interact = interact;
     this.draggableSelector = draggableSelector;
     this.dropZoneSelector = dropZoneSelector;
+
+    if (params) {
+      this.onDragStart = params.onDragStart;
+      this.onDragEnd = params.onDragEnd;
+      this.onDrop = params.onDrop;
+    }
 
     this.enable();
   }
@@ -31,7 +41,9 @@ export class DraggableService {
           endOnly: true,
           elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
         },
-        onmove: this.updateDraggablePosition
+        onstart: this.onDragStart,
+        onmove: this.updateDraggablePosition,
+        onend: this.onDragEnd
       });
   }
 
@@ -50,7 +62,8 @@ export class DraggableService {
   private setDropZone() {
     this.interact(this.dropZoneSelector)
       .dropzone({
-        accept: this.draggableSelector
+        accept: this.draggableSelector,
+        ondrop: this.onDrop
       });
   }
 }
