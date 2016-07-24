@@ -15,7 +15,7 @@ const initialState: ExperimentState = {
 
 export default function(state = initialState, action: Action): ExperimentState {
   switch (action.type) {
-    case ExperimentActions.LOAD_EXPERIMENT: {
+    case ExperimentActions.LOAD_ENTITY: {
       const experiment: Experiment = action.payload;
 
       return {

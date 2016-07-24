@@ -5,10 +5,10 @@ import { Experiment } from '../models';
 
 @Injectable()
 export class ExperimentActions {
-  static LOAD_EXPERIMENT = '[Experiment] Load Experiment';
+  static LOAD_ENTITY = '[Experiment] Load entity';
   loadExperiment(experiment: Experiment): Action {
     return {
-      type: ExperimentActions.LOAD_EXPERIMENT,
+      type: ExperimentActions.LOAD_ENTITY,
       payload: experiment
     }
   }

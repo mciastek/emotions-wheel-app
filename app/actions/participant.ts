@@ -5,10 +5,10 @@ import { Participant } from '../models';
 
 @Injectable()
 export class ParticipantActions {
-  static LOAD_PARTICIPANT = '[Participant] Load Participant';
+  static LOAD_ENTITY = '[Participant] Load entity';
   loadParticipant(participant: Participant): Action {
     return {
-      type: ParticipantActions.LOAD_PARTICIPANT,
+      type: ParticipantActions.LOAD_ENTITY,
       payload: participant
     }
   }

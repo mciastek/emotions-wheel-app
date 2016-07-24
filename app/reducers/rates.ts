@@ -6,13 +6,11 @@ import { Rate } from '../models';
 import { RatesActions } from '../actions';
 
 export interface RatesState {
-  ids: number[],
-  entities: { [id: number]: Rate }
+  entities: Rate[]
 };
 
 const initialState: RatesState = {
-  ids: [],
-  entities: {}
+  entities: []
 };
 
 export default function(state = initialState, action: Action): RatesState {
@@ -20,17 +18,8 @@ export default function(state = initialState, action: Action): RatesState {
     case RatesActions.LOAD_COLLECTION: {
       const rates: Rate[] = action.payload;
 
-      const ids = rates.map((rate) => rate.id);
-
-      const entities = rates.reduce((acc, rate: Rate) => {
-        return Object.assign(acc, {
-          [rate.id]: rate
-        });
-      }, {});
-
       return {
-        ids: ids,
-        entities: entities
+        entities: rates
       };
     }
 
@@ -40,3 +29,14 @@ export default function(state = initialState, action: Action): RatesState {
   }
 }
 
+export function getRateEntities() {
+  return (state$: Observable<RatesState>) => state$.select(s => s.entities);
+}
+
+export function getRate(id: number) {
+  return (state$: Observable<RatesState>) => state$.select(s => s.entities[id]);
+}
+
+export function hasRate(id: number) {
+  return (state$: Observable<RatesState>) => state$.select(s => s.entities.find(e => e.id === id));
+}

@@ -15,7 +15,7 @@ const initialState: ParticipantState = {
 
 export default function(state = initialState, action: Action): ParticipantState {
   switch (action.type) {
-    case ParticipantActions.LOAD_PARTICIPANT: {
+    case ParticipantActions.LOAD_ENTITY: {
       const participant: Participant = action.payload;
 
       return {
