@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import { NavController, Toast } from 'ionic-angular';
 
 import { AuthService, AuthResponse } from '../../services/auth.service';
+import { ToastService } from '../../services';
 
 import { Participant, Experiment } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
@@ -16,7 +17,8 @@ import { HomePage } from '../home/';
 
 @Component({
   templateUrl: 'build/pages/welcome/template.html',
-  directives: [ParticipantWelcomeComponent, GeneralWelcomeComponent]
+  directives: [ParticipantWelcomeComponent, GeneralWelcomeComponent],
+  providers: [ToastService]
 })
 export class WelcomePage implements OnInit {
   public isLogged: Boolean = false;
@@ -26,6 +28,7 @@ export class WelcomePage implements OnInit {
   constructor(
     private nav: NavController,
     private authService: AuthService,
+    private toastService: ToastService,
     private store: Store<AppState>,
     private experimentActions: ExperimentActions,
     private participantActions: ParticipantActions) {
@@ -42,22 +45,13 @@ export class WelcomePage implements OnInit {
     }
   }
 
-  setToast(message) {
-    return Toast.create({
-      message: message,
-      position: 'bottom',
-      showCloseButton: true,
-      closeButtonText: 'Ok'
-    });
-  }
-
   scanSuccess({ token }) {
     if (token) {
       this.authenticateWithToken(token, () => {
-        this.nav.present(this.setToast('Success'));
+        this.toastService.show('Success');
       });
     } else {
-      this.nav.present(this.setToast('QR code is invalid'));
+      this.toastService.show('QR code is invalid');
     }
   }
 
@@ -66,7 +60,7 @@ export class WelcomePage implements OnInit {
   }
 
   scanError(err) {
-    this.nav.present(this.setToast(err));
+    this.toastService.show(err);
   }
 
   authenticateWithToken(token, onSuccess?) {
@@ -83,7 +77,7 @@ export class WelcomePage implements OnInit {
         }
       }, (err) => {
         this.authService.invalidateToken();
-        this.nav.present(this.setToast(err.json().message));
+        this.toastService.show(err.json().message);
       });
   }
 

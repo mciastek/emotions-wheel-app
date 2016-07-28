@@ -6,7 +6,7 @@ import 'rxjs/add/operator/zip';
 
 import { NavController } from 'ionic-angular';
 
-import { DraggableService } from '../../services';
+import { DraggableService, ToastService } from '../../services';
 
 import { Participant, Experiment, Photo } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
@@ -21,7 +21,8 @@ import { ExperimentBoard } from '../../containers';
   directives: [
     ExperimentToolbarComponent,
     ExperimentBoard
-  ]
+  ],
+  providers: [ToastService]
 })
 export class HomePage {
   @ViewChild(Content) content: Content;
@@ -31,7 +32,7 @@ export class HomePage {
   public photos: Photo[];
 
   constructor(
-    private navController: NavController,
+    private nav: NavController,
     private store: Store<AppState>,
     private draggableService: DraggableService,
     private ratesActions: RatesActions
