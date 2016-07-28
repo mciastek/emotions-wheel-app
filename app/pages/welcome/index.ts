@@ -82,7 +82,8 @@ export class WelcomePage implements OnInit {
           onSuccess();
         }
       }, (err) => {
-        this.nav.present(this.setToast(err))
+        this.authService.invalidateToken();
+        this.nav.present(this.setToast(err.json().message));
       });
   }
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
-import { Observable }     from 'rxjs/Observable';
+import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 
 import config from '../config';
@@ -28,5 +28,9 @@ export class AuthService {
       headers: headers
     })
     .map(res => res.json());
+  }
+
+  invalidateToken() {
+    localStorage.removeItem('token');
   }
 }
