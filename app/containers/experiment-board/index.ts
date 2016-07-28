@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
+import { Content } from 'ionic-angular';
 
 import { Experiment, Participant, Photo, Rate } from '../../models';
 
@@ -21,6 +22,8 @@ import { DraggableService, SocketService } from '../../services';
 })
 export class ExperimentBoard implements OnInit {
   private connectedSocket;
+  private wheelElement: HTMLElement;
+  private dragStartTime: number;
 
   public rates$: Observable<Rate[]>;
 
@@ -34,13 +37,17 @@ export class ExperimentBoard implements OnInit {
   }
 
   @Input() photos: Photo[];
+  @Input() content: Content;
   @Input() experiment: Experiment;
   @Input() participant: Participant;
 
   ngOnInit() {
     this.draggableService.init('emotions-wheel', '.js-draggable', {
-      onDragEnd: this.sendRate
+      onDragStart: this.setStartTime.bind(this),
+      onDragEnd: this.sendRate.bind(this)
     });
+
+    this.wheelElement = <HTMLElement>document.querySelector('emotions-wheel');
 
     this.connectedSocket = this.connectSocket();
     this.watchSocketResponse();
@@ -61,7 +68,50 @@ export class ExperimentBoard implements OnInit {
       });
   }
 
+  getWheelPosition() {
+    return { top: this.wheelElement.offsetTop, left: this.wheelElement.offsetLeft };
+  }
+
   sendRate(event) {
-    console.log(event)
+    const element = event.target;
+    const photoId = parseInt(element.getAttribute('data-photo-id'));
+    const position = this.computePositions(event.interactable, event.dropzone);
+
+    const rate: Rate = {
+      name: '',
+      pos_x: position.x,
+      pos_y: position.y,
+      start_time: this.dragStartTime,
+      end_time: event.timeStamp,
+      time: event.timeStamp - this.dragStartTime,
+      photo_id: photoId,
+      experiment_id: this.experiment.id,
+      participant_id: this.participant.id
+    };
+  }
+
+  private setStartTime(event) {
+    this.dragStartTime = event.timeStamp;
+  }
+
+  private computePositions(draggable, dropzone) {
+    const contentDimensions = this.content.getContentDimensions();
+
+    const dropzoneDimensions = {
+      top: dropzone.getRect().top + contentDimensions.scrollTop,
+      left: dropzone.getRect().left + contentDimensions.scrollLeft,
+      width: dropzone.getRect().width,
+      height: dropzone.getRect().height,
+    };
+
+    const draggablePosition = {
+      top: draggable.getRect().top + contentDimensions.scrollTop,
+      left: draggable.getRect().left + contentDimensions.scrollLeft,
+    };
+
+    return {
+      x: Math.abs(dropzoneDimensions.left - draggablePosition.left) / dropzoneDimensions.width,
+      y: Math.abs(dropzoneDimensions.top - draggablePosition.top) / dropzoneDimensions.height,
+    };
   }
 }

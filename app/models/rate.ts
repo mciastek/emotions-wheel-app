@@ -1,10 +1,10 @@
 export interface Rate {
-  id: number,
+  id?: number,
   name: string;
   pos_x: number;
   pos_y: number;
-  start_time: string;
-  end_time: string;
+  start_time: number | string;
+  end_time: number | string;
   time: number;
 
   photo_id: number;
