@@ -10,7 +10,7 @@ import { AppState, getRatesEntities } from '../../reducers';
 
 import { EmotionsWheelComponent, PhotoSidebarComponent } from '../../components';
 
-import { DraggableService, SocketService } from '../../services';
+import { DraggableService, SocketService, ToastService } from '../../services';
 
 @Component({
   selector: 'experiment-board',
@@ -18,11 +18,11 @@ import { DraggableService, SocketService } from '../../services';
   directives: [
     EmotionsWheelComponent,
     PhotoSidebarComponent
-  ]
+  ],
+  providers: [ToastService]
 })
 export class ExperimentBoard implements OnInit {
   private connectedSocket;
-  private wheelElement: HTMLElement;
   private dragStartTime: number;
 
   public rates$: Observable<Rate[]>;
@@ -31,7 +31,8 @@ export class ExperimentBoard implements OnInit {
     private ratesActions: RatesActions,
     private store: Store<AppState>,
     private socketService: SocketService,
-    private draggableService: DraggableService
+    private draggableService: DraggableService,
+    private toastService: ToastService
   ) {
     this.rates$ = this.store.let(getRatesEntities());
   }
@@ -47,8 +48,6 @@ export class ExperimentBoard implements OnInit {
       onDragEnd: this.sendRate.bind(this)
     });
 
-    this.wheelElement = <HTMLElement>document.querySelector('emotions-wheel');
-
     this.connectedSocket = this.connectSocket();
     this.watchSocketResponse();
   }
@@ -63,31 +62,41 @@ export class ExperimentBoard implements OnInit {
 
   watchSocketResponse() {
     this.connectedSocket
-      .receive('ok', ({ rates }) => {
-        this.store.dispatch(this.ratesActions.loadRates(rates));
-      });
-  }
-
-  getWheelPosition() {
-    return { top: this.wheelElement.offsetTop, left: this.wheelElement.offsetLeft };
+      .receive('ok', this.updateRates.bind(this));
   }
 
   sendRate(event) {
-    const element = event.target;
-    const photoId = parseInt(element.getAttribute('data-photo-id'));
-    const position = this.computePositions(event.interactable, event.dropzone);
+    const draggable = event.target;
+    const photoId = parseInt(draggable.getAttribute('data-photo-id'));
+    const position = this.computePositions(draggable, event.dropzone);
 
     const rate: Rate = {
       name: '',
       pos_x: position.x,
       pos_y: position.y,
-      start_time: this.dragStartTime,
-      end_time: event.timeStamp,
+      start_time: this.convertDate(this.dragStartTime),
+      end_time: this.convertDate(event.timeStamp),
       time: event.timeStamp - this.dragStartTime,
       photo_id: photoId,
       experiment_id: this.experiment.id,
       participant_id: this.participant.id
     };
+
+    this.socketService.channel
+      .push('participant:new_rate', rate)
+      .receive('ok', ({ rates }) => {
+        this.toastService.show('Rate saved!');
+        this.updateRates(rates);
+      })
+      .receive('error', this.handleError.bind(this));
+  }
+
+  private updateRates({ rates }) {
+    this.store.dispatch(this.ratesActions.loadRates(rates));
+  }
+
+  private handleError({ errors }) {
+    this.toastService.show(errors.join(', '));
   }
 
   private setStartTime(event) {
@@ -105,13 +114,17 @@ export class ExperimentBoard implements OnInit {
     };
 
     const draggablePosition = {
-      top: draggable.getRect().top + contentDimensions.scrollTop,
-      left: draggable.getRect().left + contentDimensions.scrollLeft,
+      top: draggable.getBoundingClientRect().top + contentDimensions.scrollTop,
+      left: draggable.getBoundingClientRect().left + contentDimensions.scrollLeft,
     };
 
     return {
       x: Math.abs(dropzoneDimensions.left - draggablePosition.left) / dropzoneDimensions.width,
       y: Math.abs(dropzoneDimensions.top - draggablePosition.top) / dropzoneDimensions.height,
     };
+  }
+
+  private convertDate(timestamp: number): string {
+    return new Date(timestamp).toISOString();
   }
 }
