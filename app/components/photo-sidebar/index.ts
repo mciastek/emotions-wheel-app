@@ -9,14 +9,4 @@ import { Photo, Rate } from '../../models';
 export class PhotoSidebarComponent {
   @Input() photos: Photo[];
   @Input() rates: Rate[];
-
-  get remainingPhotos() {
-    return this.photos.filter((photo) => {
-      return this.rateByPhotos(photo);
-    });
-  }
-
-  rateByPhotos(photo: Photo) {
-    return !this.rates.find((rate) => photo.id === rate.photo_id);
-  }
 }
