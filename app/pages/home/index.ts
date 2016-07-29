@@ -8,8 +8,8 @@ import { NavController } from 'ionic-angular';
 
 import { DraggableService, ToastService } from '../../services';
 
-import { Participant, Experiment, Photo } from '../../models';
-import { AppState, getParticipant, getExperiment } from '../../reducers';
+import { Participant, Experiment, Photo, Rate } from '../../models';
+import { AppState, getParticipant, getExperiment, getRatesEntities } from '../../reducers';
 import { RatesActions } from '../../actions';
 
 import { ExperimentToolbarComponent } from '../../components';
@@ -29,6 +29,7 @@ export class HomePage {
 
   public participant$: Observable<Participant>;
   public experiment$: Observable<Experiment>;
+  public rates$: Observable<Rate[]>;
   public photos: Photo[];
 
   constructor(
@@ -39,6 +40,7 @@ export class HomePage {
   ) {
     this.participant$ = this.store.let(getParticipant());
     this.experiment$ = this.store.let(getExperiment());
+    this.rates$ = this.store.let(getRatesEntities());
 
     this.experiment$.map((e) => e.photos).subscribe((photos) => {
       return this.photos = photos;
