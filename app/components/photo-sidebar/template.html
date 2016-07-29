@@ -1,5 +1,5 @@
-<ion-row class="photo-sidebar__list">
-  <ion-col width-50 *ngFor="let photo of photos" class="photo-sidebar__item js-draggable" [attr.data-photo-id]="photo.id">
-    <img src="{{photo.thumb}}" alt="{{photo.name}}" />
-  </ion-col>
-</ion-row>
+<div class="photo-sidebar__list">
+  <div class="photo-item" *ngFor="let photo of photos" [attr.data-photo-id]="photo.id">
+    <img src="{{photo.thumb}}" alt="{{photo.name}}" class="photo-item__image" />
+  </div>
+</div>
