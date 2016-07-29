@@ -2,5 +2,26 @@
  * Photo sidebar
  */
 
-.photo-sidebar {
+photo-sidebar {
+  display: block;
+  width: $photo-sidebar-width;
+}
+
+.photo-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9;
+  width: 100px;
+  height: 100px;
+  transform-origin: 50% 50%;
+
+  &__image {
+    display: block;
+  }
+
+  &.in-dropzone {
+    overflow: hidden;
+    border-radius: 50%;
+  }
 }

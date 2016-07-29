@@ -3,5 +3,17 @@
  */
 
 emotions-wheel {
-  display: block;
+  width: calc(100% - #{$photo-sidebar-width});
+}
+
+.emotions-wheel__board {
+  max-width: 720px;
+  margin: 0 auto;
+
+  svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+  }
 }
