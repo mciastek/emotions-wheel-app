@@ -6,7 +6,7 @@ import { Content } from 'ionic-angular';
 import { Experiment, Participant, Photo, Rate } from '../../models';
 
 import { RatesActions } from '../../actions';
-import { AppState, getRatesEntities } from '../../reducers';
+import { AppState } from '../../reducers';
 
 import { EmotionsWheelComponent, PhotoSidebarComponent } from '../../components';
 
@@ -25,27 +25,42 @@ export class ExperimentBoard implements OnInit {
   private connectedSocket;
   private dragStartTime: number;
 
-  public rates$: Observable<Rate[]>;
-
   constructor(
     private ratesActions: RatesActions,
     private store: Store<AppState>,
     private socketService: SocketService,
     private draggableService: DraggableService,
     private toastService: ToastService
-  ) {
-    this.rates$ = this.store.let(getRatesEntities());
-  }
+  ) {}
 
   @Input() photos: Photo[];
+  @Input() rates: Rate[];
   @Input() content: Content;
   @Input() experiment: Experiment;
   @Input() participant: Participant;
 
+  get photoCollection() {
+    return this.photos.map((photo) => {
+      const rate = this.rateByPhoto(photo.id);
+
+      if (rate) {
+        return Object.assign(
+          this.draggableService.reversedDraggablePosition({
+            x: rate.pos_x,
+            y: rate.pos_y
+          }),
+        photo);
+      }
+
+      return photo;
+    });
+  }
+
   ngOnInit() {
-    this.draggableService.init('emotions-wheel', '.js-draggable', {
-      onDragStart: this.setStartTime.bind(this),
-      onDragEnd: this.sendRate.bind(this)
+    this.draggableService.init('emotions-wheel', '.photo-item', {
+      onDragStart: this.onDragStart.bind(this),
+      onDragEnd: this.sendRate.bind(this),
+      contentView: this.content
     });
 
     this.connectedSocket = this.connectSocket();
@@ -62,13 +77,13 @@ export class ExperimentBoard implements OnInit {
 
   watchSocketResponse() {
     this.connectedSocket
-      .receive('ok', this.updateRates.bind(this));
+      .receive('ok', ({ rates }) => this.updateRates(rates));
   }
 
   sendRate(event) {
     const draggable = event.target;
     const photoId = parseInt(draggable.getAttribute('data-photo-id'));
-    const position = this.computePositions(draggable, event.dropzone);
+    const position = this.draggableService.draggablePosition(draggable);
 
     const rate: Rate = {
       name: '',
@@ -91,7 +106,12 @@ export class ExperimentBoard implements OnInit {
       .receive('error', this.handleError.bind(this));
   }
 
-  private updateRates({ rates }) {
+  onDragStart(event) {
+    event.target.classList.add('in-dropzone');
+    this.setStartTime(event);
+  }
+
+  private updateRates(rates) {
     this.store.dispatch(this.ratesActions.loadRates(rates));
   }
 
@@ -103,28 +123,11 @@ export class ExperimentBoard implements OnInit {
     this.dragStartTime = event.timeStamp;
   }
 
-  private computePositions(draggable, dropzone) {
-    const contentDimensions = this.content.getContentDimensions();
-
-    const dropzoneDimensions = {
-      top: dropzone.getRect().top + contentDimensions.scrollTop,
-      left: dropzone.getRect().left + contentDimensions.scrollLeft,
-      width: dropzone.getRect().width,
-      height: dropzone.getRect().height,
-    };
-
-    const draggablePosition = {
-      top: draggable.getBoundingClientRect().top + contentDimensions.scrollTop,
-      left: draggable.getBoundingClientRect().left + contentDimensions.scrollLeft,
-    };
-
-    return {
-      x: Math.abs(dropzoneDimensions.left - draggablePosition.left) / dropzoneDimensions.width,
-      y: Math.abs(dropzoneDimensions.top - draggablePosition.top) / dropzoneDimensions.height,
-    };
-  }
-
   private convertDate(timestamp: number): string {
     return new Date(timestamp).toISOString();
+  }
+
+  private rateByPhoto(photoId) {
+    return this.rates.find(r => r.photo_id === photoId);
   }
 }
