@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { NavController, Toast } from 'ionic-angular';
 
@@ -27,6 +28,7 @@ export class WelcomePage implements OnInit {
 
   constructor(
     private nav: NavController,
+    private translate: TranslateService,
     private authService: AuthService,
     private toastService: ToastService,
     private store: Store<AppState>,
@@ -66,8 +68,12 @@ export class WelcomePage implements OnInit {
   authenticateWithToken(token, onSuccess?) {
     this.authService.authenticate(token)
       .subscribe((data: AuthResponse) => {
+        const { code } = data.participant.language;
+
         this.setParticipant(data.participant);
         this.setExperiment(data.experiment);
+
+        this.setLanguage(code);
 
         localStorage.setItem('token', token);
         this.isLogged = true;
@@ -81,12 +87,15 @@ export class WelcomePage implements OnInit {
       });
   }
 
-  setParticipant(participant) {
+  private setParticipant(participant) {
     this.store.dispatch(this.participantActions.loadParticipant(participant));
   }
 
-  setExperiment(experiment) {
+  private setExperiment(experiment) {
     this.store.dispatch(this.experimentActions.loadExperiment(experiment));
   }
 
+  private setLanguage(lang) {
+    this.translate.use(lang);
+  }
 }

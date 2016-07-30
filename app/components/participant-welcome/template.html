@@ -1,5 +1,5 @@
-<h2>Hello, {{fullName}}</h2>
+<h2>{{ 'welcome.participant' | translate: { fullName: fullName } }}</h2>
 
-<p>Welcome in {{experimentName}}</p>
+<p>{{ 'welcome.experiment' | translate: { experimentName: experimentName } }}</p>
 
-<button outline (click)="onButtonClick()">Start experiment</button>
+<button outline (click)="onButtonClick()">{{ 'welcome.button' | translate }}</button>
