@@ -5,6 +5,8 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { NavController, Toast } from 'ionic-angular';
 
+import config from '../../config';
+
 import { AuthService, AuthResponse } from '../../services/auth.service';
 import { ToastService } from '../../services';
 
@@ -96,6 +98,11 @@ export class WelcomePage implements OnInit {
   }
 
   private setLanguage(lang) {
-    this.translate.use(lang);
+    const userLang = navigator.language.split('-')[0];
+    const langRegex = new RegExp(`(${config.languages.join('|')})`, 'gi');
+
+    const language = langRegex.test(lang) ? lang : 'en';
+
+    this.translate.use(language);
   }
 }
