@@ -8,6 +8,9 @@
     "experiment": "Bierzesz udział w eksperymencie: \"{{experimentName}}\"",
     "button": "Zacznij eksperyment"
   },
+  "toolbar": {
+    "contactButton": "Kontakt"
+  },
   "emotionsWheel": {
     "labels": {
       "disapproval": "dezaprobata",
@@ -42,6 +45,16 @@
       "distraction": "rozproszenie",
       "sadness": "smutek",
       "grief": "żal"
+    }
+  },
+  "researcherContact": {
+    "header": "Dane kontaktowe badacza",
+    "closeButton": "Zamknij",
+    "info": "Możesz skontaktować się z autorem badania za pomocą poniższych danych.",
+    "fields": {
+      "name": "Imię i nazwisko",
+      "email": "E-mail",
+      "phone": "Numer telefonu"
     }
   }
 }
