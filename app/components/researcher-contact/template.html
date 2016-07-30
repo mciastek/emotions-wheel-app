@@ -1,0 +1,34 @@
+<ion-header>
+  <ion-navbar primary>
+    <ion-title>{{ 'researcherContact.header' | translate }}</ion-title>
+    <ion-buttons start>
+      <button (click)="close()">{{ 'researcherContact.closeButton' | translate }}</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <p class="researcher-contact__info">
+    {{ 'researcherContact.info' | translate }}
+  </p>
+
+  <ion-list class="researcher-contact__list">
+    <ion-item>
+      <ion-icon name="person" item-left></ion-icon>
+      <ion-label>{{ 'researcherContact.fields.name' | translate }}</ion-label>
+      <span item-right>{{researcherName}}</span>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="mail" item-left></ion-icon>
+      <ion-label>{{ 'researcherContact.fields.email' | translate }}</ion-label>
+      <a href="mailto:{{researcher.email}}" item-right>{{researcher.email}}</a>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-left></ion-icon>
+      <ion-label>{{ 'researcherContact.fields.phone' | translate }}</ion-label>
+      <a href="tel:{{researcher.phone}}" item-right>{{researcher.phone}}</a>
+    </ion-item>
+  </ion-list>
+</ion-content>

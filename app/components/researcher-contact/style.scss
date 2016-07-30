@@ -1,0 +1,17 @@
+/**
+ * Researcher contact
+ */
+
+.researcher-contact__info {
+  text-align: center;
+}
+
+.researcher-contact__list {
+  .item:first-child {
+    border-top: 0;
+  }
+
+  .item:last-child {
+    border-bottom: 0;
+  }
+}

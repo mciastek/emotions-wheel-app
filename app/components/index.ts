@@ -4,6 +4,7 @@ import { EmotionsWheelComponent } from './emotions-wheel';
 import { WheelLabelsComponent } from './wheel-labels';
 import { ExperimentToolbarComponent } from './experiment-toolbar';
 import { PhotoSidebarComponent } from './photo-sidebar';
+import { ResearcherContactComponent } from './researcher-contact';
 
 export {
   ParticipantWelcomeComponent,
@@ -11,5 +12,6 @@ export {
   EmotionsWheelComponent,
   WheelLabelsComponent,
   ExperimentToolbarComponent,
-  PhotoSidebarComponent
+  PhotoSidebarComponent,
+  ResearcherContactComponent
 }
