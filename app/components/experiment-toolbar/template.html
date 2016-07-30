@@ -1,6 +1,9 @@
-<ion-toolbar>
-  <ion-row>
-    <ion-col width-50>Experiment: "{{experimentName}}"</ion-col>
-    <ion-col width-50 style="text-align: right;">{{participantName}}</ion-col>
-  </ion-row>
+<ion-toolbar primary>
+  <ion-title>{{experimentName}}</ion-title>
+  <ion-buttons end>
+    <button (click)="contactButtonClick($event)">
+      <ion-icon name="contact"></ion-icon>
+      {{ 'toolbar.contactButton' | translate }}
+    </button>
+  </ion-buttons>
 </ion-toolbar>
