@@ -1,9 +1,12 @@
 import { ExperimentBoard } from './experiment-board';
+import { PhotoPreview } from './photo-preview';
 
 export {
-  ExperimentBoard
+  ExperimentBoard,
+  PhotoPreview
 };
 
 export default [
-  ExperimentBoard
+  ExperimentBoard,
+  PhotoPreview
 ];

@@ -1,14 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, AfterViewInit } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { Content } from 'ionic-angular';
+import { Modal, Content, NavController } from 'ionic-angular';
 
 import { Experiment, Participant, Photo, Rate } from '../../models';
 
-import { RatesActions } from '../../actions';
+import { RatesActions, UIActions } from '../../actions';
 import { AppState } from '../../reducers';
 
 import { EmotionsWheelComponent, PhotoSidebarComponent } from '../../components';
+import { PhotoPreview } from '../photo-preview';
 
 import { DraggableService, SocketService, ToastService } from '../../services';
 
@@ -17,15 +18,20 @@ import { DraggableService, SocketService, ToastService } from '../../services';
   templateUrl: 'build/containers/experiment-board/template.html',
   directives: [
     EmotionsWheelComponent,
-    PhotoSidebarComponent
+    PhotoSidebarComponent,
+    PhotoPreview
   ],
   providers: [ToastService]
 })
-export class ExperimentBoard implements OnInit {
+export class ExperimentBoard implements AfterViewInit {
   private connectedSocket;
   private dragStartTime: number;
 
+  public imageUrl: string;
+
   constructor(
+    private nav: NavController,
+    private uiActions: UIActions,
     private ratesActions: RatesActions,
     private store: Store<AppState>,
     private socketService: SocketService,
@@ -56,10 +62,11 @@ export class ExperimentBoard implements OnInit {
     });
   }
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.draggableService.init('emotions-wheel', '.photo-item', {
       onDragStart: this.onDragStart.bind(this),
       onDragEnd: this.sendRate.bind(this),
+      onDraggableDoubleTap: this.showPhotoModal.bind(this),
       contentView: this.content
     });
 
@@ -111,6 +118,14 @@ export class ExperimentBoard implements OnInit {
     this.setStartTime(event);
   }
 
+  showPhotoModal(event) {
+    const draggable = <HTMLElement>event.currentTarget;
+    const photoId = parseInt(draggable.getAttribute('data-photo-id'));
+    const photo = this.photoById(photoId);
+
+    this.store.dispatch(this.uiActions.showPhotoPreview(photo.original));
+  }
+
   private updateRates(rates) {
     this.store.dispatch(this.ratesActions.loadRates(rates));
   }
@@ -125,6 +140,10 @@ export class ExperimentBoard implements OnInit {
 
   private convertDate(timestamp: number): string {
     return new Date(timestamp).toISOString();
+  }
+
+  private photoById(photoId) {
+    return this.photos.find(p => p.id === photoId);
   }
 
   private rateByPhoto(photoId) {
