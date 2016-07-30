@@ -20,7 +20,7 @@ export default function(state = initialState, action: Action): ExperimentState {
 
       return {
         entity: Object.assign({}, state.entity, experiment)
-      }
+      };
     }
 
     default: {

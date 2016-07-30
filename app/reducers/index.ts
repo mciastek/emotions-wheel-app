@@ -8,17 +8,20 @@ import { combineReducers } from '@ngrx/store';
 import ExperimentReducer, { ExperimentState, getExperiment } from './experiment';
 import ParticipantReducer, { ParticipantState, getParticipant } from './participant';
 import RatesReducer, { RatesState, getRateEntities, getRate, hasRate } from './rates';
+import UIReducer, { UIState, getPhotoPreview } from './ui';
 
 export interface AppState {
   participant: ParticipantState,
   experiment: ExperimentState,
-  rates: RatesState
+  rates: RatesState,
+  ui: UIState
 }
 
 export default compose(combineReducers)({
   participant: ParticipantReducer,
   experiment: ExperimentReducer,
-  rates: RatesReducer
+  rates: RatesReducer,
+  ui: UIReducer
 });
 
 // State functions
@@ -33,6 +36,10 @@ export function getExperimentState() {
 
 export function getRatesState() {
   return (state$: Observable<AppState>) => state$.select(s => s.rates);
+}
+
+export function getUIState() {
+  return (state$: Observable<AppState>) => state$.select(s => s.ui);
 }
 
 // Select function
@@ -50,9 +57,13 @@ export function getRatesEntities() {
 }
 
 export function getRate(id: number) {
-   return compose(getRate(id), getRatesState());
- }
+  return compose(getRate(id), getRatesState());
+}
 
- export function hasRate(id: number) {
-   return compose(hasRate(id), getRatesState());
- }
+export function hasRate(id: number) {
+  return compose(hasRate(id), getRatesState());
+}
+
+export function getPhotoPreview() {
+  return compose(getPhotoPreview(), getUIState());
+}
