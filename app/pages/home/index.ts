@@ -4,7 +4,7 @@ import { Content } from 'ionic-angular';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import 'rxjs/add/operator/zip';
 
-import { NavController } from 'ionic-angular';
+import { Modal, NavController } from 'ionic-angular';
 
 import { DraggableService, ToastService } from '../../services';
 
@@ -12,7 +12,7 @@ import { Participant, Experiment, Photo, Rate } from '../../models';
 import { AppState, getParticipant, getExperiment, getRatesEntities } from '../../reducers';
 import { RatesActions } from '../../actions';
 
-import { ExperimentToolbarComponent } from '../../components';
+import { ExperimentToolbarComponent, ResearcherContactComponent } from '../../components';
 
 import { ExperimentBoard } from '../../containers';
 
@@ -45,5 +45,13 @@ export class HomePage {
     this.experiment$.map((e) => e.photos).subscribe((photos) => {
       return this.photos = photos;
     });
+  }
+
+  openContactModal() {
+    const modal = Modal.create(ResearcherContactComponent, {
+      researcher$: this.experiment$.map(e => e.researcher)
+    });
+
+    this.nav.present(modal);
   }
 }
