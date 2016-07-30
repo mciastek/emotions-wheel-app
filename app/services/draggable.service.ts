@@ -13,6 +13,8 @@ export class DraggableService {
   public onDragStart: Function;
   public onDragEnd: Function;
   public onDrop: Function;
+  public onDraggableDoubleTap: Function;
+
   public contentView: Content;
 
   constructor() {}
@@ -27,6 +29,7 @@ export class DraggableService {
       this.onDragEnd = params.onDragEnd;
       this.onDrop = params.onDrop;
       this.contentView = params.contentView;
+      this.onDraggableDoubleTap = params.onDraggableDoubleTap;
     }
 
     this.enable();
@@ -44,8 +47,6 @@ export class DraggableService {
       top: draggable.getBoundingClientRect().top + contentDimensions.scrollTop,
       left: draggable.getBoundingClientRect().left + contentDimensions.scrollLeft,
     };
-
-    console.log(draggable.getBoundingClientRect())
 
     return {
       x: Math.abs(this.dropzoneDimensions.left - draggableCoords.left) / this.dropzoneDimensions.width,
@@ -85,6 +86,11 @@ export class DraggableService {
         onmove: this.updateDraggablePosition,
         onend: this.onDragEnd
       });
+
+    if (this.onDraggableDoubleTap) {
+      this.interact(this.draggableSelector)
+        .on('doubletap', this.onDraggableDoubleTap);
+    }
   }
 
   private setDropZone() {
@@ -104,8 +110,6 @@ export class DraggableService {
     const y = (parseFloat(target.getAttribute('data-y')) || '0') + event.dy;
 
     target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0)`;
-
-    console.log(event.pageX, event.pageY)
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
