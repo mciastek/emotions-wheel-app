@@ -1,3 +1,5 @@
+import { Language } from './language';
+
 export interface Participant {
   id: number;
   email: string;
@@ -6,7 +8,5 @@ export interface Participant {
   birthdate: string;
   age: number;
   gender: string;
-  language_id: number;
-  country_id: number;
-  city_id: number;
+  language: Language;
 }
