@@ -1,3 +1,47 @@
 {
-  "welcome": "Welcome"
+  "login": {
+    "welcome": "Welcome",
+    "button": "Log in"
+  },
+  "welcome": {
+    "participant": "Hello, {{fullName}}",
+    "experiment": "You participate in experiment: \"{{experimentName}}\"",
+    "button": "Begin experiment"
+  },
+  "emotionsWheel": {
+    "labels": {
+      "disapproval": "disapproval",
+      "remorse": "remorse",
+      "contempt": "contempt",
+      "awe": "awe",
+      "submission": "submission",
+      "love": "love",
+      "optimism": "optimism",
+      "aggressiveness": "aggressiveness",
+      "pensiveness": "pensiveness",
+      "annoyance": "annoyance",
+      "anger": "anger",
+      "rage": "rage",
+      "ecstasy": "ecstasy",
+      "joy": "joy",
+      "serenity": "serenity",
+      "terror": "terror",
+      "fear": "fear",
+      "apprehension": "apprehension",
+      "admiration": "admiration",
+      "trust": "trust",
+      "acceptance": "acceptance",
+      "vigilance": "vigilance",
+      "anticipation": "anticipation",
+      "interest": "interest",
+      "boredom": "boredom",
+      "disgust": "disgust",
+      "loathing": "loathing",
+      "amazement": "amazement",
+      "surprise": "surprise",
+      "distraction": "distraction",
+      "sadness": "sadness",
+      "grief": "grief"
+    }
+  }
 }

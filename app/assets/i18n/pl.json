@@ -1,0 +1,47 @@
+{
+  "login": {
+    "welcome": "Witaj",
+    "button": "Zaloguj się"
+  },
+  "welcome": {
+    "participant": "Witaj, {{fullName}}",
+    "experiment": "Bierzesz udział w eksperymencie: \"{{experimentName}}\"",
+    "button": "Zacznij eksperyment"
+  },
+  "emotionsWheel": {
+    "labels": {
+      "disapproval": "dezaprobata",
+      "remorse": "skrucha",
+      "contempt": "pogarda",
+      "awe": "respekt",
+      "submission": "uległość",
+      "love": "miłość",
+      "optimism": "optymizm",
+      "aggressiveness": "agresywność",
+      "pensiveness": "zaduma",
+      "annoyance": "irytacja",
+      "anger": "złość",
+      "rage": "wściekłość",
+      "ecstasy": "ekstaza",
+      "joy": "radość",
+      "serenity": "spokój",
+      "terror": "przerażenie",
+      "fear": "strach",
+      "apprehension": "lęk",
+      "admiration": "podziw",
+      "trust": "zaufanie",
+      "acceptance": "akceptacja",
+      "vigilance": "czujność",
+      "anticipation": "oczekiwanie",
+      "interest": "zinteresowanie",
+      "boredom": "nuda",
+      "disgust": "wstręt",
+      "loathing": "odraza",
+      "amazement": "zdumienie",
+      "surprise": "zaskoczenie",
+      "distraction": "rozproszenie",
+      "sadness": "smutek",
+      "grief": "żal"
+    }
+  }
+}
