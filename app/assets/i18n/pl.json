@@ -1,7 +1,11 @@
 {
   "login": {
     "welcome": "Witaj",
-    "button": "Zaloguj się"
+    "button": "Zaloguj się",
+    "toasts": {
+      "qrSuccess": "Kod zeskanowany poprawnie",
+      "qrInvalid": "Kod jest niepoprawny"
+    }
   },
   "welcome": {
     "participant": "Witaj, {{fullName}}",
@@ -10,6 +14,9 @@
   },
   "toolbar": {
     "contactButton": "Kontakt"
+  },
+  "photoPreview": {
+    "button": "Zamknij"
   },
   "emotionsWheel": {
     "labels": {
@@ -56,5 +63,8 @@
       "email": "E-mail",
       "phone": "Numer telefonu"
     }
+  },
+  "experimentBoard": {
+    "rateSuccess": "Ocena zdjęcia została zapisana"
   }
 }

@@ -1,7 +1,11 @@
 {
   "login": {
     "welcome": "Welcome",
-    "button": "Log in"
+    "button": "Log in",
+    "toasts": {
+      "qrSuccess": "Code scan success",
+      "qrInvalid": "Code is invalid"
+    }
   },
   "welcome": {
     "participant": "Hello, {{fullName}}",
@@ -10,6 +14,9 @@
   },
   "toolbar": {
     "contactButton": "Contact"
+  },
+  "photoPreview": {
+    "button": "Close"
   },
   "emotionsWheel": {
     "labels": {
@@ -56,5 +63,8 @@
       "email": "E-mail",
       "phone": "Phone"
     }
+  },
+  "experimentBoard": {
+    "rateSuccess": "Photo rate has been saved"
   }
 }

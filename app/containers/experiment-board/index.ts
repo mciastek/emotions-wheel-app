@@ -2,6 +2,7 @@ import { Component, Input, AfterViewInit } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Modal, Content, NavController } from 'ionic-angular';
+import { TranslatePipe } from 'ng2-translate/ng2-translate';
 
 import { Experiment, Participant, Photo, Rate } from '../../models';
 
@@ -21,7 +22,10 @@ import { DraggableService, SocketService, ToastService } from '../../services';
     PhotoSidebarComponent,
     PhotoPreview
   ],
-  providers: [ToastService]
+  providers: [
+    ToastService,
+    TranslatePipe
+  ]
 })
 export class ExperimentBoard implements AfterViewInit {
   private connectedSocket;
@@ -31,6 +35,7 @@ export class ExperimentBoard implements AfterViewInit {
 
   constructor(
     private nav: NavController,
+    private translatePipe: TranslatePipe,
     private uiActions: UIActions,
     private ratesActions: RatesActions,
     private store: Store<AppState>,
@@ -104,10 +109,12 @@ export class ExperimentBoard implements AfterViewInit {
       participant_id: this.participant.id
     };
 
+    const successMsg = this.translatePipe.transform('experimentBoard.rateSuccess');
+
     this.socketService.channel
       .push('participant:new_rate', rate)
       .receive('ok', ({ rates }) => {
-        this.toastService.show('Rate saved!');
+        this.toastService.show(successMsg);
         this.updateRates(rates);
       })
       .receive('error', this.handleError.bind(this));

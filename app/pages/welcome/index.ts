@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { TranslateService } from 'ng2-translate/ng2-translate';
+import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 
 import { NavController, Toast } from 'ionic-angular';
 
@@ -20,8 +20,14 @@ import { HomePage } from '../home/';
 
 @Component({
   templateUrl: 'build/pages/welcome/template.html',
-  directives: [ParticipantWelcomeComponent, GeneralWelcomeComponent],
-  providers: [ToastService]
+  directives: [
+    ParticipantWelcomeComponent,
+    GeneralWelcomeComponent
+  ],
+  providers: [
+    ToastService,
+    TranslatePipe
+  ]
 })
 export class WelcomePage implements OnInit {
   public isLogged: Boolean = false;
@@ -31,6 +37,7 @@ export class WelcomePage implements OnInit {
   constructor(
     private nav: NavController,
     private translate: TranslateService,
+    private translatePipe: TranslatePipe,
     private authService: AuthService,
     private toastService: ToastService,
     private store: Store<AppState>,
@@ -50,12 +57,15 @@ export class WelcomePage implements OnInit {
   }
 
   scanSuccess({ token }) {
+    const successMsg = this.translatePipe.transform('login.toasts.qrSuccess');
+    const invalidMsg = this.translatePipe.transform('login.toasts.qrInvalid');
+
     if (token) {
       this.authenticateWithToken(token, () => {
-        this.toastService.show('Success');
+        this.toastService.show(successMsg);
       });
     } else {
-      this.toastService.show('QR code is invalid');
+      this.toastService.show(invalidMsg);
     }
   }
 
