@@ -13,7 +13,5 @@ emotions-wheel {
   svg {
     display: block;
     width: 100%;
-    height: calc(100vh - #{$toolbar-height});
-    margin: 0 auto;
   }
 }
