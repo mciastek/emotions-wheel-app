@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import 'rxjs/add/operator/filter';
 
 import { NavController, Toast } from 'ionic-angular';
 
@@ -17,6 +18,7 @@ import { ParticipantActions, ExperimentActions } from '../../actions';
 import { ParticipantWelcomeComponent, GeneralWelcomeComponent } from '../../components';
 
 import { HomePage } from '../home/';
+import { FinishedPage } from '../finished';
 
 @Component({
   templateUrl: 'build/pages/welcome/template.html',
@@ -46,6 +48,10 @@ export class WelcomePage implements OnInit {
 
     this.participant$ = this.store.let(getParticipant());
     this.experiment$ = this.store.let(getExperiment());
+
+    this.experiment$
+      .filter(e => typeof e.id !==  'undefined')
+      .subscribe((e) => this.checkIfExperimentFinished(e));
   }
 
   ngOnInit() {
@@ -114,5 +120,13 @@ export class WelcomePage implements OnInit {
     const language = langRegex.test(lang) ? lang : 'en';
 
     this.translate.use(language);
+  }
+
+  private checkIfExperimentFinished(experiment: Experiment) {
+    const isFinished = experiment.has_completed || !experiment.is_active;
+
+    if (isFinished) {
+      this.nav.push(FinishedPage, { experiment });
+    }
   }
 }

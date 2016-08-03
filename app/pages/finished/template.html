@@ -1,0 +1,8 @@
+<ion-content padding fullscreen="true">
+  <div class="fullscreen-center">
+    <h1>{{ 'finished.header' | translate: { firstName: participantName } }}</h1>
+    <p *ngIf="hasCompleted">{{ 'finished.completedMessage' | translate: { experimentName: experimentName } }}</p>
+    <p *ngIf="isInactive">{{ 'finished.inactiveMessage' | translate: { experimentName: experimentName } }}</p>
+    <button large (click)="startNewExperiment()">{{ 'finished.button' | translate }}</button>
+  </div>
+</ion-content>
