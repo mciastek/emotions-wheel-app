@@ -12,6 +12,12 @@
     "experiment": "Bierzesz udział w eksperymencie: \"{{experimentName}}\"",
     "button": "Zacznij eksperyment"
   },
+  "finished": {
+    "header": "To już koniec, {{firstName}}",
+    "inactiveMessage": "Eksperyment \"{{experimentName}}\" już się skończył. Weź udział w nowym badaniu.",
+    "completedMessage": "Oceniłeś wszystkie zdjęcia! Dziękujemy za wzięcie udziału w eksperymencie: \"{{experimentName}}\"",
+    "button": "Zacznij kolejny eksperyment"
+  },
   "toolbar": {
     "contactButton": "Kontakt"
   },

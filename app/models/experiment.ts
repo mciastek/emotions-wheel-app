@@ -9,4 +9,6 @@ export interface Experiment {
   end_date: string;
   photos: Photo[];
   researcher: Researcher;
+  is_active?: boolean;
+  has_completed?: boolean;
 }
