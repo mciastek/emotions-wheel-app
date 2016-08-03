@@ -65,6 +65,11 @@
     }
   },
   "experimentBoard": {
-    "rateSuccess": "Photo rate has been saved"
+    "rateSuccess": "Photo rate has been saved",
+    "errors": {
+      "rate_forbidden": "Photo is already rated!",
+      "pos_x": "Photo position is invalid!",
+      "pos_y": "Photo position is invalid!"
+    }
   }
 }

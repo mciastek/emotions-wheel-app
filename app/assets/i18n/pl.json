@@ -65,6 +65,11 @@
     }
   },
   "experimentBoard": {
-    "rateSuccess": "Ocena zdjęcia została zapisana"
+    "rateSuccess": "Ocena zdjęcia została zapisana",
+    "errors": {
+      "rate_forbidden": "Zdjęcie zostało już ocenione!",
+      "pos_x": "Pozycja zdjęcia jest nieprawidłowa!",
+      "pos_y": "Pozycja zdjęcia jest nieprawidłowa!"
+    }
   }
 }
