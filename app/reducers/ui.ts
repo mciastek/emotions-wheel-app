@@ -16,6 +16,9 @@ const initialState: UIState = <UI>{
   photoPreview: {
     imageUrl: '',
     isOpened: false
+  },
+  boardOverlay: {
+    isVisible: false
   }
 };
 
@@ -37,6 +40,14 @@ export default function(state = initialState, action: Action): UIState {
           imageUrl: '',
           isOpened: isOpened
         }
+      });
+    }
+
+    case UIActions.SHOW_BOARD_OVERLAY: {
+      const { isVisible } = action.payload;
+
+      return Object.assign({}, state, {
+        boardOverlay: { isVisible }
       });
     }
 

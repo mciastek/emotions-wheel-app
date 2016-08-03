@@ -23,4 +23,14 @@ export class UIActions {
       }
     }
   }
+
+  static SHOW_BOARD_OVERLAY = '[UI] Show board overlay';
+  showBoardOverlay(): Action {
+    return {
+      type: UIActions.SHOW_BOARD_OVERLAY,
+      payload: {
+        isVisible: true
+      }
+    }
+  }
 }
