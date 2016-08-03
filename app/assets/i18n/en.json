@@ -24,6 +24,10 @@
   "photoPreview": {
     "button": "Close"
   },
+  "boardOverlay": {
+    "message": "You have rated all photos",
+    "button": "End experiment"
+  },
   "emotionsWheel": {
     "labels": {
       "disapproval": "disapproval",

@@ -24,6 +24,10 @@
   "photoPreview": {
     "button": "Zamknij"
   },
+  "boardOverlay": {
+    "message": "Oceniłeś wszystkie zdjęcia",
+    "button": "Zakończ eksperyment"
+  },
   "emotionsWheel": {
     "labels": {
       "disapproval": "dezaprobata",
