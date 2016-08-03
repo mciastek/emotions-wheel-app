@@ -1,5 +1,4 @@
 import { Component, ElementRef, Input, OnInit } from '@angular/core';
-import {  } from 'ionic-angular';
 
 import { Photo, Rate } from '../../models';
 

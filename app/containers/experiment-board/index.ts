@@ -1,7 +1,7 @@
-import { Component, Input, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { Modal, Content, NavController } from 'ionic-angular';
+import { Modal, Content } from 'ionic-angular';
 import { TranslatePipe } from 'ng2-translate/ng2-translate';
 
 import { Experiment, Participant, Photo, Rate } from '../../models';
@@ -34,7 +34,6 @@ export class ExperimentBoard implements AfterViewInit {
   public imageUrl: string;
 
   constructor(
-    private nav: NavController,
     private translatePipe: TranslatePipe,
     private uiActions: UIActions,
     private ratesActions: RatesActions,
@@ -49,6 +48,8 @@ export class ExperimentBoard implements AfterViewInit {
   @Input() content: Content;
   @Input() experiment: Experiment;
   @Input() participant: Participant;
+
+  @Output() endExperiment = new EventEmitter;
 
   get photoCollection() {
     return this.photos.map((photo) => {
@@ -109,14 +110,9 @@ export class ExperimentBoard implements AfterViewInit {
       participant_id: this.participant.id
     };
 
-    const successMsg = this.translatePipe.transform('experimentBoard.rateSuccess');
-
     this.socketService.channel
       .push('participant:new_rate', rate)
-      .receive('ok', ({ rates }) => {
-        this.toastService.show(successMsg);
-        this.updateRates(rates);
-      })
+      .receive('ok', this.rateSubmissionResponse.bind(this))
       .receive('error', this.handleError.bind(this));
   }
 
@@ -131,6 +127,17 @@ export class ExperimentBoard implements AfterViewInit {
     const photo = this.photoById(photoId);
 
     this.store.dispatch(this.uiActions.showPhotoPreview(photo.original));
+  }
+
+  private rateSubmissionResponse({ rates, experiment_completed }) {
+    const successMsg = this.translatePipe.transform('experimentBoard.rateSuccess');
+
+    if (!experiment_completed) {
+      this.toastService.show(successMsg);
+      this.updateRates(rates);
+    } else {
+      this.endExperiment.emit({ rates, experiment_completed });
+    }
   }
 
   private updateRates(rates) {
