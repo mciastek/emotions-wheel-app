@@ -138,7 +138,9 @@ export class ExperimentBoard implements AfterViewInit {
   }
 
   private handleError({ errors }) {
-    this.toastService.show(errors.join(', '));
+    const errorMessages = this.translatedErrors(errors);
+
+    this.toastService.show(errorMessages.join(', '));
   }
 
   private setStartTime(event) {
@@ -155,5 +157,11 @@ export class ExperimentBoard implements AfterViewInit {
 
   private rateByPhoto(photoId) {
     return this.rates.find(r => r.photo_id === photoId);
+  }
+
+  private translatedErrors(errors) {
+    return errors.map((e) => {
+      return this.translatePipe.transform(`experimentBoard.errors.${e.type}`);
+    });
   }
 }

@@ -40,7 +40,7 @@ export class DraggableService {
     this.setDropZone();
   }
 
-  draggablePosition(draggable) {
+  draggablePosition(draggable: HTMLElement) {
     const contentDimensions = this.contentView.getContentDimensions();
 
     const draggableCoords = {
