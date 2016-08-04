@@ -23,6 +23,12 @@ export default function(state = initialState, action: Action): ExperimentState {
       };
     }
 
+    case ExperimentActions.SET_AS_COMPLETED: {
+      return {
+        entity: Object.assign({}, state.entity, { has_completed: true })
+      };
+    }
+
     default: {
       return state;
     }

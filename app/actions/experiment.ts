@@ -12,4 +12,11 @@ export class ExperimentActions {
       payload: experiment
     }
   }
+
+  static SET_AS_COMPLETED = '[Experiment] Set as completed';
+  setAsCompleted(): Action {
+    return {
+      type: ExperimentActions.SET_AS_COMPLETED
+    };
+  }
 }
