@@ -10,17 +10,20 @@ import { DraggableService, ToastService } from '../../services';
 
 import { Participant, Experiment, Photo, Rate } from '../../models';
 import { AppState, getParticipant, getExperiment, getRatesEntities } from '../../reducers';
-import { RatesActions } from '../../actions';
+import { ExperimentActions, RatesActions } from '../../actions';
 
 import { ExperimentToolbarComponent, ResearcherContactComponent } from '../../components';
 
-import { ExperimentBoard } from '../../containers';
+import { ExperimentBoard, BoardOverlay } from '../../containers';
+
+import { FinishedPage } from '../finished';
 
 @Component({
   templateUrl: 'build/pages/home/template.html',
   directives: [
     ExperimentToolbarComponent,
-    ExperimentBoard
+    ExperimentBoard,
+    BoardOverlay
   ],
   providers: [ToastService]
 })
@@ -36,6 +39,7 @@ export class HomePage {
     private nav: NavController,
     private store: Store<AppState>,
     private draggableService: DraggableService,
+    private experimentActions: ExperimentActions,
     private ratesActions: RatesActions
   ) {
     this.participant$ = this.store.let(getParticipant());
@@ -53,5 +57,10 @@ export class HomePage {
     });
 
     this.nav.present(modal);
+  }
+
+  goToFinished() {
+    this.store.dispatch(this.experimentActions.setAsCompleted());
+    // this.nav.push(FinishedPage);
   }
 }
