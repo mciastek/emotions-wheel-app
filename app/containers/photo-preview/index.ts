@@ -1,6 +1,5 @@
 import { Component, ElementRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Modal, NavController, ViewController } from 'ionic-angular';
 import { Observable, Subscribable } from 'rxjs/Observable';
 
 import { PhotoPreviewState } from '../../models/ui';

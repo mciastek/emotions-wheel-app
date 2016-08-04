@@ -8,7 +8,7 @@ import { combineReducers } from '@ngrx/store';
 import ExperimentReducer, { ExperimentState, getExperiment } from './experiment';
 import ParticipantReducer, { ParticipantState, getParticipant } from './participant';
 import RatesReducer, { RatesState, getRateEntities, getRate, hasRate } from './rates';
-import UIReducer, { UIState, getPhotoPreview } from './ui';
+import UIReducer, { UIState, getPhotoPreview, getBoardOverlay } from './ui';
 
 export interface AppState {
   participant: ParticipantState,
@@ -66,4 +66,8 @@ export function hasRate(id: number) {
 
 export function getPhotoPreview() {
   return compose(getPhotoPreview(), getUIState());
+}
+
+export function getBoardOverlay() {
+  return compose(getBoardOverlay(), getUIState());
 }

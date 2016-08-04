@@ -3,11 +3,11 @@ export interface PhotoPreviewState {
   isOpened: boolean;
 }
 
-export interface BoardOverlay {
+export interface BoardOverlayState {
   isVisible: boolean;
 }
 
 export interface UI {
   photoPreview: PhotoPreviewState;
-  boardOverlay: BoardOverlay;
+  boardOverlay: BoardOverlayState;
 }

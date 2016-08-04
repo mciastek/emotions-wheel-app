@@ -2,14 +2,12 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import '@ngrx/core/add/operator/select';
 
-import { UI } from '../models';
+import { UI, PhotoPreviewState, BoardOverlayState } from '../models/ui';
 import { UIActions } from '../actions';
 
 export interface UIState {
-  photoPreview: {
-    imageUrl: string;
-    isOpened: boolean;
-  }
+  photoPreview: PhotoPreviewState;
+  boardOverlay: BoardOverlayState;
 }
 
 const initialState: UIState = <UI>{
@@ -59,4 +57,8 @@ export default function(state = initialState, action: Action): UIState {
 
 export function getPhotoPreview() {
   return (state$: Observable<UIState>) => state$.select(s => s.photoPreview);
+}
+
+export function getBoardOverlay() {
+  return (state$: Observable<UIState>) => state$.select(s => s.boardOverlay);
 }

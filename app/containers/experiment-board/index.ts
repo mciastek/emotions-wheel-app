@@ -49,8 +49,6 @@ export class ExperimentBoard implements AfterViewInit {
   @Input() experiment: Experiment;
   @Input() participant: Participant;
 
-  @Output() endExperiment = new EventEmitter;
-
   get photoCollection() {
     return this.photos.map((photo) => {
       const rate = this.rateByPhoto(photo.id);
@@ -136,7 +134,7 @@ export class ExperimentBoard implements AfterViewInit {
       this.toastService.show(successMsg);
       this.updateRates(rates);
     } else {
-      this.endExperiment.emit({ rates, experiment_completed });
+      this.store.dispatch(this.uiActions.showBoardOverlay());
     }
   }
 
