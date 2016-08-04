@@ -1,2 +1,4 @@
-<h3>{{ 'boardOverlay.message' | translate }}</h3>
-<button large (click)="buttonClick($event)">{{ 'boardOverlay.button' | translate }}</button>
+<div class="board-overlay__container">
+  <h1 class="board-overlay__title">{{ 'boardOverlay.message' | translate }}</h1>
+  <button class="board-overlay__button" large (click)="buttonClick($event)">{{ 'boardOverlay.button' | translate }}</button>
+</div>

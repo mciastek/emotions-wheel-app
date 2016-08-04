@@ -1,0 +1,16 @@
+// App Utils
+// --------------------------------------------------
+
+// *** Simple animations ***
+
+@mixin fade-in($duration: .2s) {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity $duration;
+}
+
+@mixin fade-out($duration: .2s, $easing: linear) {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity $duration $easing 0s, visibility 0s $easing $duration;
+}
