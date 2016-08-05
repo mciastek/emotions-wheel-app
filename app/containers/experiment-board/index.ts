@@ -83,7 +83,7 @@ export class ExperimentBoard implements AfterViewInit {
     const { id:participantId } = this.participant;
 
     this.socketService.connect();
-    return this.socketService.join(`experiments:${experimentId}`, { participant_id: participantId });
+    return this.socketService.join(`experiment:${experimentId}`, { participant_id: participantId });
   }
 
   watchSocketResponse() {
