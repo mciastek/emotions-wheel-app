@@ -18,7 +18,7 @@ export class AuthService {
 
   }
 
-  authenticate(token) : Observable<Object> {
+  authenticate(token) : Observable<AuthResponse> {
     const body = JSON.stringify({ token });
     const headers = new Headers();
 

@@ -8,7 +8,7 @@ import { NavController, Toast } from 'ionic-angular';
 
 import config from '../../config';
 
-import { AuthService, AuthResponse } from '../../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { ToastService } from '../../services';
 
 import { Participant, Experiment } from '../../models';
@@ -85,7 +85,7 @@ export class WelcomePage implements OnInit {
 
   authenticateWithToken(token, onSuccess?) {
     this.authService.authenticate(token)
-      .subscribe((data: AuthResponse) => {
+      .subscribe((data) => {
         const { code } = data.participant.language;
 
         this.setParticipant(data.participant);
@@ -125,7 +125,7 @@ export class WelcomePage implements OnInit {
   private checkIfExperimentFinished(experiment: Experiment) {
     const isFinished = experiment.has_completed || !experiment.is_active;
 
-    if (isFinished) {
+    if (isFinished && localStorage.getItem('token')) {
       this.nav.push(FinishedPage, { experiment });
     }
   }

@@ -25,7 +25,8 @@
     },
     "footer": {
       "buttonBack": "Go back"
-    }
+    },
+    "uploadSuccess": "Photo has been saved!"
   },
   "toolbar": {
     "contactButton": "Contact"

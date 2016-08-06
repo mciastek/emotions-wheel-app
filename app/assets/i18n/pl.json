@@ -25,7 +25,8 @@
     },
     "footer": {
       "buttonBack": "Powrót"
-    }
+    },
+    "uploadSuccess": "Zdjęcie zostało zapisane!"
   },
   "toolbar": {
     "contactButton": "Kontakt"
