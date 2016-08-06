@@ -49,6 +49,8 @@ export class ExperimentBoard implements AfterViewInit {
   @Input() experiment: Experiment;
   @Input() participant: Participant;
 
+  @Output() galleryButtonClick = new EventEmitter();
+
   get photoCollection() {
     return this.photos.map((photo) => {
       const rate = this.rateByPhoto(photo.id);
@@ -125,6 +127,10 @@ export class ExperimentBoard implements AfterViewInit {
     const photo = this.photoById(photoId);
 
     this.store.dispatch(this.uiActions.showPhotoPreview(photo.original));
+  }
+
+  photoSidebarButtonClick(e) {
+    this.galleryButtonClick.emit(e);
   }
 
   private rateSubmissionResponse({ rates, experiment_completed }) {

@@ -3,3 +3,8 @@
     <img src="{{photo.thumb}}" alt="{{photo.name}}" class="photo-item__image" />
   </div>
 </div>
+
+<button class="photo-sidebar__button" secondary large full (click)="buttonClick($event)">
+  <ion-icon name="images"></ion-icon>
+  {{ 'photoSidebar.galleryButton' | translate }}
+</button>

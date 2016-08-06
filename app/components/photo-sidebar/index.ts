@@ -1,4 +1,4 @@
-import { Component, Input, AfterViewChecked } from '@angular/core';
+import { Component, Input, Output, EventEmitter, AfterViewChecked } from '@angular/core';
 
 import { Photo } from '../../models';
 
@@ -10,6 +10,8 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   private columns: number;
 
   @Input() photos: Photo[];
+  @Input() hasGalleryButton: boolean;
+  @Output() galleryButtonClick = new EventEmitter();
 
   constructor() {
     this.columns = 4;
@@ -18,6 +20,10 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   ngAfterViewChecked() {
     this.updatePhotoElementsPosition();
     this.buildPhotosGrid();
+  }
+
+  buttonClick(e) {
+    this.galleryButtonClick.emit(e);
   }
 
   private updatePhotoElementsPosition() {

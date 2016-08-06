@@ -64,6 +64,9 @@
       "grief": "żal"
     }
   },
+  "photoSidebar": {
+    "galleryButton": "Dodaj zdjęcie"
+  },
   "researcherContact": {
     "header": "Dane kontaktowe badacza",
     "closeButton": "Zamknij",

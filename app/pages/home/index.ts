@@ -16,6 +16,8 @@ import { ExperimentToolbarComponent, ResearcherContactComponent } from '../../co
 
 import { ExperimentBoard, BoardOverlay } from '../../containers';
 
+import { GalleryPage } from '../gallery';
+
 @Component({
   templateUrl: 'build/pages/home/template.html',
   directives: [
@@ -55,6 +57,10 @@ export class HomePage {
     });
 
     this.nav.present(modal);
+  }
+
+  goToGallery() {
+    this.nav.push(GalleryPage);
   }
 
   goToFinished() {

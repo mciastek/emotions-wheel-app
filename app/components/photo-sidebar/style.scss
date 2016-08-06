@@ -8,6 +8,16 @@ photo-sidebar {
   background-color: #f9f9f9;
 }
 
+.photo-sidebar {
+  &__button {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+    width: $photo-sidebar-width;
+  }
+}
+
 .photo-item {
   position: absolute;
   top: 0;
