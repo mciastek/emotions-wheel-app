@@ -10,7 +10,8 @@
   "welcome": {
     "participant": "Witaj, {{fullName}}",
     "experiment": "Bierzesz udział w eksperymencie: \"{{experimentName}}\"",
-    "button": "Zacznij eksperyment"
+    "button": "Zacznij eksperyment",
+    "loader": "Ładowanie eksperymentu..."
   },
   "finished": {
     "header": "To już koniec, {{firstName}}",

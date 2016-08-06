@@ -14,4 +14,8 @@
   .item:last-child {
     border-bottom: 0;
   }
+
+  .item-inner span {
+    white-space: nowrap;
+  }
 }

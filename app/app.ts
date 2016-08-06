@@ -1,6 +1,6 @@
 import { PLATFORM_PIPES, Component } from '@angular/core';
-import { HTTP_PROVIDERS ,Http } from '@angular/http';
-import { Platform , ionicBootstrap} from 'ionic-angular';
+import { HTTP_PROVIDERS, Http } from '@angular/http';
+import { Platform, ionicBootstrap } from 'ionic-angular';
 import { StatusBar } from 'ionic-native';
 import { provideStore } from '@ngrx/store';
 import { TranslatePipe, TranslateService, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';

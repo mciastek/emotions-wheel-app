@@ -28,6 +28,7 @@ export class GalleryPage implements AfterViewInit {
   static CAMERA_OPTIONS = {
     destinationType: Camera.DestinationType.DATA_URL,
     sourceType: Camera.PictureSourceType.CAMERA,
+    quality: 70,
     targetWidth: 1000,
     targetHeight: 1000
   };
