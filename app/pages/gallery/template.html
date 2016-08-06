@@ -1,13 +1,13 @@
 <ion-header>
-  <ion-navbar>
+  <ion-toolbar>
     <ion-title>{{ 'gallery.toolbar.title' | translate }}</ion-title>
     <ion-buttons end>
-      <button primary>
+      <button primary (click)="takePhoto()">
         <ion-icon name="camera"></ion-icon>
         {{ 'gallery.toolbar.button' | translate }}
       </button>
     </ion-buttons>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content>
