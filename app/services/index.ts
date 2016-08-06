@@ -2,14 +2,14 @@ import { AuthService } from './auth.service';
 import { SocketService } from './socket.service';
 import { DraggableService } from './draggable.service';
 import { ToastService } from './toast.service';
-import { PhotoService } from './photo.service';
+import { PhotoUploadService } from './photo-upload.service';
 
 export {
   AuthService,
   SocketService,
   DraggableService,
   ToastService,
-  PhotoService
+  PhotoUploadService
 };
 
 export default [
@@ -17,5 +17,5 @@ export default [
   SocketService,
   DraggableService,
   ToastService,
-  PhotoService
+  PhotoUploadService
 ];

@@ -7,7 +7,7 @@ import * as moment from 'moment';
 
 import { Camera } from 'ionic-native';
 
-import { ToastService, PhotoService } from '../../services';
+import { ToastService, PhotoUploadService } from '../../services';
 
 import { Participant, Photo } from '../../models';
 import { AppState, getParticipant } from '../../reducers';
@@ -19,7 +19,7 @@ import { PhotoGallery } from '../../containers';
   directives: [PhotoGallery],
   providers: [
     ToastService,
-    PhotoService,
+    PhotoUploadService,
     TranslatePipe
   ]
 })
@@ -39,7 +39,7 @@ export class GalleryPage {
     private store: Store<AppState>,
     private translatePipe: TranslatePipe,
     private toastService: ToastService,
-    private photoService: PhotoService
+    private photoUploadService: PhotoUploadService
   ) {
     this.participant$ = this.store.let(getParticipant());
 
@@ -68,7 +68,7 @@ export class GalleryPage {
     const now = moment();
     const fileName = this.generateFileName();
 
-    return this.photoService.save(`participants/${this.participantId}/photos`, imageData, fileName, {
+    return this.photoUploadService.save(`participants/${this.participantId}/photos`, imageData, fileName, {
       name: `${now.format('YYYY-MM-DD')} ${now.format('H:m:s')}, by participant: "${this.participantId}"`,
       author_type: 'participant',
       author_id: this.participantId

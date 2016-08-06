@@ -8,7 +8,7 @@ import config from '../config';
 import { Photo } from '../models';
 
 @Injectable()
-export class PhotoService {
+export class PhotoUploadService {
   constructor(public http: Http) {
 
   }
