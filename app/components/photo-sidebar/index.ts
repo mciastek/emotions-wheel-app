@@ -10,7 +10,7 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   private columns: number;
 
   @Input() photos: Photo[];
-  @Input() hasGalleryButton: boolean;
+  @Input() showGalleryButton: boolean;
   @Output() galleryButtonClick = new EventEmitter();
 
   constructor() {

@@ -51,6 +51,10 @@ export class ExperimentBoard implements AfterViewInit {
 
   @Output() galleryButtonClick = new EventEmitter();
 
+  get galleryEnabled() {
+    return this.experiment.kind === 'free_mode';
+  }
+
   get photoCollection() {
     return this.photos.map((photo) => {
       const rate = this.rateByPhoto(photo.id);

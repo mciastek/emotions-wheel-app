@@ -18,6 +18,15 @@
     "completedMessage": "Oceniłeś wszystkie zdjęcia! Dziękujemy za wzięcie udziału w eksperymencie: \"{{experimentName}}\"",
     "button": "Zacznij kolejny eksperyment"
   },
+  "gallery": {
+    "toolbar": {
+      "title": "Twoje zdjęcia",
+      "button": "Zrób zdjęcie"
+    },
+    "footer": {
+      "buttonBack": "Powrót"
+    }
+  },
   "toolbar": {
     "contactButton": "Kontakt"
   },

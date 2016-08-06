@@ -4,7 +4,7 @@
   </div>
 </div>
 
-<button class="photo-sidebar__button" secondary large full (click)="buttonClick($event)">
+<button class="photo-sidebar__button" secondary large full (click)="buttonClick($event)" *ngIf="showGalleryButton">
   <ion-icon name="images"></ion-icon>
   {{ 'photoSidebar.galleryButton' | translate }}
 </button>

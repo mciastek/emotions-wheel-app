@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>{{ 'gallery.toolbar.title' | translate }}</ion-title>
+    <ion-buttons end>
+      <button primary>
+        <ion-icon name="camera"></ion-icon>
+        {{ 'gallery.toolbar.button' | translate }}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <photo-gallery></photo-gallery>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <button large danger fab-center (click)="goBack()">
+      {{ 'gallery.footer.buttonBack' | translate }}
+    </button>
+  </ion-toolbar>
+</ion-footer>

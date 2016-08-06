@@ -18,6 +18,15 @@
     "completedMessage": "You rated all photos! Thank you for participating in: \"{{experimentName}}\"",
     "button": "Go to next experiment"
   },
+  "gallery": {
+    "toolbar": {
+      "title": "Your photos",
+      "button": "Take a photo"
+    },
+    "footer": {
+      "buttonBack": "Go back"
+    }
+  },
   "toolbar": {
     "contactButton": "Contact"
   },
