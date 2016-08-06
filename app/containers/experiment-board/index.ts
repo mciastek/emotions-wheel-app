@@ -48,6 +48,7 @@ export class ExperimentBoard implements AfterViewInit {
   @Input() participant: Participant;
 
   @Output() galleryButtonClick = new EventEmitter();
+  @Output() onExperimentConnect = new EventEmitter();
 
   get galleryEnabled() {
     return this.experiment.kind === 'free_mode';
@@ -92,7 +93,10 @@ export class ExperimentBoard implements AfterViewInit {
 
   watchSocketResponse() {
     this.connectedSocket
-      .receive('ok', ({ rates }) => this.updateRates(rates));
+      .receive('ok', ({ rates }) => {
+        this.updateRates(rates);
+        this.onExperimentConnect.emit({});
+      });
   }
 
   sendRate(event) {

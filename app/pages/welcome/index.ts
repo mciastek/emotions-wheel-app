@@ -4,12 +4,12 @@ import { Observable } from 'rxjs/Observable';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 import 'rxjs/add/operator/filter';
 
-import { NavController, Toast } from 'ionic-angular';
+import { NavController, Toast, Loading } from 'ionic-angular';
 
 import config from '../../config';
 
 import { AuthService } from '../../services/auth.service';
-import { ToastService } from '../../services';
+import { ToastService, LoaderService } from '../../services';
 
 import { Participant, Experiment } from '../../models';
 import { AppState, getParticipant, getExperiment } from '../../reducers';
@@ -42,6 +42,7 @@ export class WelcomePage implements OnInit {
     private translatePipe: TranslatePipe,
     private authService: AuthService,
     private toastService: ToastService,
+    private loaderService: LoaderService,
     private store: Store<AppState>,
     private experimentActions: ExperimentActions,
     private participantActions: ParticipantActions
@@ -57,6 +58,8 @@ export class WelcomePage implements OnInit {
 
   ngOnInit() {
     const token = localStorage.getItem('token');
+
+    this.setLoader();
 
     if (token) {
       this.authenticateWithToken(token);
@@ -77,6 +80,7 @@ export class WelcomePage implements OnInit {
   }
 
   startExperiment() {
+    this.loaderService.show(this.nav);
     this.nav.push(HomePage);
   }
 
@@ -129,5 +133,10 @@ export class WelcomePage implements OnInit {
     if (isFinished && localStorage.getItem('token')) {
       this.nav.push(FinishedPage, { experiment });
     }
+  }
+
+  private setLoader() {
+    const message = this.translatePipe.transform('welcome.loader');
+    this.loaderService.create(message);
   }
 }

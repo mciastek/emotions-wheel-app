@@ -4,6 +4,7 @@ import { DraggableService } from './draggable.service';
 import { ToastService } from './toast.service';
 import { PhotoUploadService } from './photo-upload.service';
 import { PhotosService } from './photos.service';
+import { LoaderService } from './loader.service';
 
 export {
   AuthService,
@@ -11,7 +12,8 @@ export {
   DraggableService,
   ToastService,
   PhotoUploadService,
-  PhotosService
+  PhotosService,
+  LoaderService
 };
 
 export default [
@@ -20,5 +22,6 @@ export default [
   DraggableService,
   ToastService,
   PhotoUploadService,
-  PhotosService
+  PhotosService,
+  LoaderService
 ];

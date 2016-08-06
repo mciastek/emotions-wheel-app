@@ -1,5 +1,5 @@
 <ion-content>
   <experiment-toolbar [participant]="participant$ | async" [experiment]="experiment$ | async" (buttonClick)="openContactModal($event)"></experiment-toolbar>
-  <experiment-board [participant]="participant$ | async" [experiment]="experiment$ | async" [rates]="rates$ | async" [photos]="photos" [content]="content" (galleryButtonClick)="goToGallery($event)"></experiment-board>
+  <experiment-board [participant]="participant$ | async" [experiment]="experiment$ | async" [rates]="rates$ | async" [photos]="photos" [content]="content" (galleryButtonClick)="goToGallery($event)" (onExperimentConnect)="dismissLoader()"></experiment-board>
   <board-overlay (closeClicked)="goToFinished()"></board-overlay>
 </ion-content>

@@ -6,7 +6,7 @@ import 'rxjs/add/operator/zip';
 
 import { Modal, NavController } from 'ionic-angular';
 
-import { DraggableService, ToastService } from '../../services';
+import { DraggableService, ToastService, LoaderService } from '../../services';
 
 import { Participant, Experiment, Photo, Rate } from '../../models';
 import { AppState, getParticipant, getExperiment, getRatesEntities } from '../../reducers';
@@ -39,6 +39,7 @@ export class HomePage {
     private nav: NavController,
     private store: Store<AppState>,
     private draggableService: DraggableService,
+    private loaderService: LoaderService,
     private experimentActions: ExperimentActions,
     private ratesActions: RatesActions
   ) {
@@ -49,6 +50,10 @@ export class HomePage {
     this.experiment$.map((e) => e.photos).subscribe((photos) => {
       return this.photos = photos;
     });
+  }
+
+  dismissLoader() {
+    this.loaderService.dismiss();
   }
 
   openContactModal() {
