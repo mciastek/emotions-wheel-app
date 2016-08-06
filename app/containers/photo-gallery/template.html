@@ -1,5 +1,7 @@
 <ion-grid>
   <ion-row class="photo=gallery__list">
-    <ion-col class="photo-gallery__item" width-20 *ngFor="let photo of photos"></ion-col>
+    <ion-col class="photo-gallery__item" width-20 *ngFor="let photo of photos">
+      <img src="{{photo.thumb}}" alt="{{photo.name}}" (doubleTap)="onDoubleTap(photo)" />
+    </ion-col>
   </ion-row>
 </ion-grid>

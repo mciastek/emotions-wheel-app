@@ -44,7 +44,8 @@ export class WelcomePage implements OnInit {
     private toastService: ToastService,
     private store: Store<AppState>,
     private experimentActions: ExperimentActions,
-    private participantActions: ParticipantActions) {
+    private participantActions: ParticipantActions
+  ) {
 
     this.participant$ = this.store.let(getParticipant());
     this.experiment$ = this.store.let(getExperiment());
@@ -85,11 +86,11 @@ export class WelcomePage implements OnInit {
 
   authenticateWithToken(token, onSuccess?) {
     this.authService.authenticate(token)
-      .subscribe((data) => {
-        const { code } = data.participant.language;
+      .subscribe((res) => {
+        const { code } = res.participant.language;
 
-        this.setParticipant(data.participant);
-        this.setExperiment(data.experiment);
+        this.setParticipant(res.participant);
+        this.setExperiment(res.experiment);
 
         this.setLanguage(code);
 

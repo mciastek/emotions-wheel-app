@@ -14,11 +14,9 @@ export interface AuthResponse {
 
 @Injectable()
 export class AuthService {
-  constructor(public http: Http) {
+  constructor(public http: Http) {}
 
-  }
-
-  authenticate(token) : Observable<AuthResponse> {
+  authenticate(token): Observable<AuthResponse> {
     const body = JSON.stringify({ token });
     const headers = new Headers();
 

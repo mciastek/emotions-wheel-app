@@ -11,10 +11,13 @@ import reducer from './reducers';
 import actions from './actions';
 import services from './services';
 
+import { PhotoPreview } from './containers';
+
 import { WelcomePage } from './pages/welcome';
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>',
+  template: '<ion-nav [root]="rootPage"></ion-nav><photo-preview></photo-preview>',
+  directives: [PhotoPreview],
   providers: [
     {
       provide: TranslateLoader,

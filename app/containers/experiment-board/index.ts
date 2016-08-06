@@ -10,7 +10,6 @@ import { RatesActions, UIActions } from '../../actions';
 import { AppState } from '../../reducers';
 
 import { EmotionsWheelComponent, PhotoSidebarComponent } from '../../components';
-import { PhotoPreview } from '../photo-preview';
 
 import { DraggableService, SocketService, ToastService } from '../../services';
 
@@ -19,8 +18,7 @@ import { DraggableService, SocketService, ToastService } from '../../services';
   templateUrl: 'build/containers/experiment-board/template.html',
   directives: [
     EmotionsWheelComponent,
-    PhotoSidebarComponent,
-    PhotoPreview
+    PhotoSidebarComponent
   ],
   providers: [
     ToastService,

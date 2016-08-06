@@ -35,6 +35,8 @@ export class PhotoSidebarComponent implements AfterViewChecked {
         const x = (photo.x || 0);
         const y = (photo.y || 0);
 
+        if (!photoElement) return;
+
         photoElement.setAttribute('data-x', x.toString());
         photoElement.setAttribute('data-y', y.toString());
         photoElement.classList.add('in-dropzone');

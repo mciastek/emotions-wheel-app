@@ -9,9 +9,7 @@ import { Photo } from '../models';
 
 @Injectable()
 export class PhotoUploadService {
-  constructor(public http: Http) {
-
-  }
+  constructor(public http: Http) {}
 
   save(endpoint: string, imageData: string, fileName = 'photo.jpg', params = {}): Observable<Object> {
     const blob = this.b64toBlob(imageData, 'image/jpeg');
