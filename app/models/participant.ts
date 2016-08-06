@@ -1,4 +1,5 @@
 import { Language } from './language';
+import { Photo } from './photo';
 
 export interface Participant {
   id: number;
@@ -9,4 +10,5 @@ export interface Participant {
   age: number;
   gender: string;
   language: Language;
+  photos?: Photo[];
 }

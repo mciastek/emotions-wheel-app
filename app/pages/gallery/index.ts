@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NavController } from 'ionic-angular';
 import { Observable, Subscribable } from 'rxjs/Observable';
@@ -7,10 +7,11 @@ import * as moment from 'moment';
 
 import { Camera } from 'ionic-native';
 
-import { ToastService, PhotoUploadService } from '../../services';
+import { ToastService, PhotoUploadService, PhotosService } from '../../services';
 
 import { Participant, Photo } from '../../models';
 import { AppState, getParticipant } from '../../reducers';
+import { ParticipantActions } from '../../actions';
 
 import { PhotoGallery } from '../../containers';
 
@@ -23,7 +24,7 @@ import { PhotoGallery } from '../../containers';
     TranslatePipe
   ]
 })
-export class GalleryPage {
+export class GalleryPage implements AfterViewInit {
   static CAMERA_OPTIONS = {
     destinationType: Camera.DestinationType.DATA_URL,
     sourceType: Camera.PictureSourceType.CAMERA,
@@ -32,6 +33,7 @@ export class GalleryPage {
   };
 
   public participant$: Observable<Participant>;
+  public photos: Photo[];
   private participantId: number;
 
   constructor(
@@ -39,13 +41,23 @@ export class GalleryPage {
     private store: Store<AppState>,
     private translatePipe: TranslatePipe,
     private toastService: ToastService,
-    private photoUploadService: PhotoUploadService
+    private photoUploadService: PhotoUploadService,
+    private photosService: PhotosService,
+    private participantActions: ParticipantActions
   ) {
     this.participant$ = this.store.let(getParticipant());
 
-    this.participant$.subscribe(p => this.participantId = p.id);
+    this.participant$.subscribe((participant) => {
+      this.participantId = participant.id;
+      this.photos = participant.photos;
+    });
+  }
 
-    console.log(moment())
+  ngAfterViewInit() {
+    this.photosService.fetchAll(this.participantId)
+      .subscribe(({ photos }) => {
+        this.loadPhotos(photos);
+      });
   }
 
   takePhoto() {
@@ -75,9 +87,10 @@ export class GalleryPage {
     });
   }
 
-  private uploadSuccess() {
+  private uploadSuccess({ photos }) {
     const message = this.translatePipe.transform('gallery.uploadSuccess');
     this.toastService.show(message);
+    this.loadPhotos(photos);
   }
 
   private cameraError(err) {
@@ -88,6 +101,10 @@ export class GalleryPage {
     const now = moment();
 
     return `${now.format('YYYYMMDD')}_${now.format('Hms')}-participant_${this.participantId}_photo.${ext}`;
+  }
+
+  private loadPhotos(photos) {
+    this.store.dispatch(this.participantActions.loadPhotos(photos));
   }
 }
 

@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import '@ngrx/core/add/operator/select';
 
-import { Participant } from '../models';
+import { Participant, Photo } from '../models';
 import { ParticipantActions } from '../actions';
 
 export interface ParticipantState {
@@ -21,6 +21,16 @@ export default function(state = initialState, action: Action): ParticipantState 
       return {
         entity: Object.assign({}, state.entity, participant)
       }
+    }
+
+    case ParticipantActions.LOAD_PHOTOS: {
+      const photos: Photo[] = action.payload;
+
+      return {
+        entity: Object.assign({}, state.entity, {
+          photos
+        })
+      };
     }
 
     default: {
