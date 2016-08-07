@@ -65,10 +65,6 @@ export class WelcomePage implements OnInit {
     }
   }
 
-  ionViewWillEnter() {
-    this.setLoader();
-  }
-
   scanSuccess({ token }) {
     const errorMessage = this.translatePipe.transform('login.toasts.qrInvalid');
 
@@ -84,6 +80,7 @@ export class WelcomePage implements OnInit {
   }
 
   startExperiment() {
+    this.setLoader();
     this.loaderService.show(this.nav);
     this.nav.push(HomePage);
   }

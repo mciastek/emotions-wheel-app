@@ -17,6 +17,10 @@
   "welcome": {
     "participant": "Witaj, {{fullName}}",
     "experiment": "Bierzesz udział w eksperymencie: \"{{experimentName}}\"",
+    "experimentTypeMessage": {
+      "experiment": "W tym eksperymencie można ocenić zdjęcia tylko jeden raz. Gdy ocenisz wszystkie zdjęcia, eksperyment się zakończy.",
+      "free_mode": "W tym eksperymencie masz możliwość oceny zdjęć dowolną ilość razy. Możesz również dodać własne zdjęcia."
+    },
     "button": "Zacznij eksperyment",
     "loader": "Ładowanie eksperymentu..."
   },

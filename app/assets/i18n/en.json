@@ -17,6 +17,10 @@
   "welcome": {
     "participant": "Hello, {{fullName}}",
     "experiment": "You participate in experiment: \"{{experimentName}}\"",
+    "experimentTypeMessage": {
+      "experiment": "In that experiment you can rate one photo only once. When all photos are rated, experiment ends.",
+      "free_mode": "In that experiment you can rate photo as many times as you want. You can also add your photos."
+    },
     "button": "Begin experiment",
     "loader": "Loading experiment..."
   },

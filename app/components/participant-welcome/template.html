@@ -1,5 +1,12 @@
-<h2>{{ 'welcome.participant' | translate: { fullName: fullName } }}</h2>
+<section class="welcome-content">
+  <h1 class="welcome-content__title">{{ 'welcome.participant' | translate: { fullName: fullName } }}</h1>
+  <p class="welcome-content__message">
+    {{ 'welcome.experiment' | translate: { experimentName: experimentName } }}
+  </p>
 
-<p>{{ 'welcome.experiment' | translate: { experimentName: experimentName } }}</p>
+  <p class="welcome-content__message">
+    {{ experimentModeMessageTranslation | translate }}
+  </p>
 
-<button large (click)="onButtonClick()">{{ 'welcome.button' | translate }}</button>
+  <button class="welcome-content__button" large (click)="onButtonClick()">{{ 'welcome.button' | translate }}</button>
+</section>

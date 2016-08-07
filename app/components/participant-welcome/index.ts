@@ -23,4 +23,8 @@ export class ParticipantWelcomeComponent {
   get experimentName() {
     return this.experiment.name;
   }
+
+  get experimentModeMessageTranslation() {
+    return `welcome.experimentTypeMessage.${this.experiment.kind}`;
+  }
 }
