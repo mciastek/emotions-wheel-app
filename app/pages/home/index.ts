@@ -1,12 +1,12 @@
 import { Component, ViewChild } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Content } from 'ionic-angular';
+import { Content, Page } from 'ionic-angular';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import 'rxjs/add/operator/zip';
 
 import { Modal, NavController } from 'ionic-angular';
 
-import { DraggableService, ToastService, LoaderService } from '../../services';
+import { DraggableService, ToastService, LoaderService, SocketService } from '../../services';
 
 import { Participant, Experiment, Photo, Rate } from '../../models';
 import { AppState, getParticipant, getExperiment, getRatesEntities } from '../../reducers';
@@ -29,6 +29,7 @@ import { GalleryPage } from '../gallery';
 })
 export class HomePage {
   @ViewChild(Content) content: Content;
+  @ViewChild(ExperimentBoard) experimentBoard: ExperimentBoard;
 
   public participant$: Observable<Participant>;
   public experiment$: Observable<Experiment>;
@@ -40,6 +41,7 @@ export class HomePage {
     private store: Store<AppState>,
     private draggableService: DraggableService,
     private loaderService: LoaderService,
+    private socketService: SocketService,
     private experimentActions: ExperimentActions,
     private ratesActions: RatesActions
   ) {
@@ -50,6 +52,10 @@ export class HomePage {
     this.experiment$.map((e) => e.photos).subscribe((photos) => {
       return this.photos = photos;
     });
+  }
+
+  ionViewWillLeave() {
+    this.socketService.channel.leave();
   }
 
   dismissLoader() {

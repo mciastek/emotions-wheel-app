@@ -4,7 +4,7 @@ import { Loading } from 'ionic-angular';
 
 @Injectable()
 export class LoaderService {
-  private loader: Loading;
+  public loader: Loading;
 
   create(message) {
     this.loader = Loading.create({

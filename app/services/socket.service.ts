@@ -17,6 +17,10 @@ export class SocketService {
     this.socket.connect();
   }
 
+  disconnect() {
+    this.socket.disconnect();
+  }
+
   join(topic, params?) {
     this.channel = this.socket.channel(topic, params);
     return this.channel.join();

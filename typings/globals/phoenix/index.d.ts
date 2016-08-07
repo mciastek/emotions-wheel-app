@@ -14,7 +14,7 @@ declare module "phoenix" {
     protocol(): string;
     endPointURL(): string;
 
-    disconnect(callback: Function, code: string, reason: any): void;
+    disconnect(callback?: Function, code?: string, reason?: any): void;
     connect(params?: any): void;
 
     log(kind: string, msg: string, data: any): void;

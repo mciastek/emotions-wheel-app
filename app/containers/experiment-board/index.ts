@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Modal, Content } from 'ionic-angular';
@@ -25,7 +25,7 @@ import { DraggableService, SocketService, ToastService } from '../../services';
     TranslatePipe
   ]
 })
-export class ExperimentBoard implements AfterViewInit {
+export class ExperimentBoard implements OnInit {
   private connectedSocket;
   private dragStartTime: number;
 
@@ -71,7 +71,7 @@ export class ExperimentBoard implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this.draggableService.init('emotions-wheel', '.photo-item', {
       onDragStart: this.onDragStart.bind(this),
       onDragEnd: this.sendRate.bind(this),
@@ -81,6 +81,10 @@ export class ExperimentBoard implements AfterViewInit {
 
     this.connectedSocket = this.connectSocket();
     this.watchSocketResponse();
+  }
+
+  ngOnDestroy() {
+    this.draggableService.destroy();
   }
 
   connectSocket() {

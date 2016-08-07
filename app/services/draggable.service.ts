@@ -40,6 +40,11 @@ export class DraggableService {
     this.setDropZone();
   }
 
+  destroy() {
+    this.interact(this.draggableSelector).unset();
+    this.interact(this.dropZoneSelector).unset();
+  }
+
   draggablePosition(draggable: HTMLElement) {
     const contentDimensions = this.contentView.getContentDimensions();
 
