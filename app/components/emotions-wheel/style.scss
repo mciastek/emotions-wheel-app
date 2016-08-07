@@ -14,4 +14,14 @@ emotions-wheel {
     display: block;
     width: 100%;
   }
+
+  path {
+    opacity: 0.5 !important;
+    stroke: none !important;
+  }
+
+  text {
+    font-size: 1.6rem !important;
+    font-family: 'Roboto', sans-serif !important;
+  }
 }
