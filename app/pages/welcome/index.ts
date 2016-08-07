@@ -4,7 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
 import 'rxjs/add/operator/filter';
 
-import { NavController, Toast, Loading } from 'ionic-angular';
+import { NavController, Toast, Alert } from 'ionic-angular';
+import { Network } from 'ionic-native';
 
 import config from '../../config';
 
@@ -59,23 +60,26 @@ export class WelcomePage implements OnInit {
   ngOnInit() {
     const token = localStorage.getItem('token');
 
-    this.setLoader();
-
     if (token) {
       this.authenticateWithToken(token);
     }
   }
 
+  ionViewWillEnter() {
+    this.setLoader();
+  }
+
   scanSuccess({ token }) {
-    const successMsg = this.translatePipe.transform('login.toasts.qrSuccess');
-    const invalidMsg = this.translatePipe.transform('login.toasts.qrInvalid');
+    const errorMessage = this.translatePipe.transform('login.toasts.qrInvalid');
 
     if (token) {
       this.authenticateWithToken(token, () => {
-        this.toastService.show(successMsg);
+        const successMessage = this.translatePipe.transform('login.toasts.qrSuccess');
+
+        this.toastService.show(successMessage);
       });
     } else {
-      this.toastService.show(invalidMsg);
+      this.toastService.show(errorMessage);
     }
   }
 
@@ -88,7 +92,7 @@ export class WelcomePage implements OnInit {
     this.toastService.show(err);
   }
 
-  authenticateWithToken(token, onSuccess?) {
+  authenticateWithToken(token, showToast?) {
     this.authService.authenticate(token)
       .subscribe((res) => {
         const { code } = res.participant.language;
@@ -96,18 +100,25 @@ export class WelcomePage implements OnInit {
         this.setParticipant(res.participant);
         this.setExperiment(res.experiment);
 
-        this.setLanguage(code);
-
         localStorage.setItem('token', token);
-        this.isLogged = true;
 
-        if (onSuccess) {
-          onSuccess();
-        }
-      }, (err) => {
-        this.authService.invalidateToken();
-        this.toastService.show(err.json().message);
-      });
+        this.setLanguage(code)
+          .subscribe(() => {
+            if (showToast) {
+              showToast();
+            }
+
+            this.isLogged = true;
+          });
+      }, this.authError.bind(this));
+  }
+
+  private authError(res) {
+    const error = res.json().error;
+    const errorMessage = this.translatePipe.transform('login.toasts.qrInvalid');
+    const message = (error.type === 'invalid') ? errorMessage : error;
+
+    this.toastService.show(message);
   }
 
   private setParticipant(participant) {
@@ -118,13 +129,13 @@ export class WelcomePage implements OnInit {
     this.store.dispatch(this.experimentActions.loadExperiment(experiment));
   }
 
-  private setLanguage(lang) {
+  private setLanguage(lang): Observable<any> {
     const userLang = navigator.language.split('-')[0];
     const langRegex = new RegExp(`(${config.languages.join('|')})`, 'gi');
 
     const language = langRegex.test(lang) ? lang : 'en';
 
-    this.translate.use(language);
+    return this.translate.use(language);
   }
 
   private checkIfExperimentFinished(experiment: Experiment) {
@@ -137,6 +148,7 @@ export class WelcomePage implements OnInit {
 
   private setLoader() {
     const message = this.translatePipe.transform('welcome.loader');
+
     this.loaderService.create(message);
   }
 }

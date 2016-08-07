@@ -5,6 +5,13 @@
     "toasts": {
       "qrSuccess": "Code scan success",
       "qrInvalid": "Code is invalid"
+    },
+    "alerts": {
+      "noConnection": {
+        "title": "No Internet connection!",
+        "message": "Application needs connection with Internet to work properly.",
+        "button": "I understand"
+      }
     }
   },
   "welcome": {

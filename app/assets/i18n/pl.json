@@ -5,6 +5,13 @@
     "toasts": {
       "qrSuccess": "Kod zeskanowany poprawnie",
       "qrInvalid": "Kod jest niepoprawny"
+    },
+    "alerts": {
+      "noConnection": {
+        "title": "Brak połączenia z Internetem!",
+        "message": "Aplikacja do poprawnego działania wymaga połączenia z Internetem.",
+        "button": "Rozumiem"
+      }
     }
   },
   "welcome": {
