@@ -81,6 +81,7 @@ export class ExperimentBoard implements OnInit {
 
     this.connectedSocket = this.connectSocket();
     this.watchSocketResponse();
+    this.watchPresence();
   }
 
   ngOnDestroy() {
@@ -92,7 +93,10 @@ export class ExperimentBoard implements OnInit {
     const { id:participantId } = this.participant;
 
     this.socketService.connect();
-    return this.socketService.join(`experiment:${experimentId}`, { participant_id: participantId });
+    return this.socketService.join('participant:experiment', {
+      experiment_id: experimentId,
+      participant_id: participantId
+    });
   }
 
   watchSocketResponse() {
@@ -101,6 +105,12 @@ export class ExperimentBoard implements OnInit {
         this.updateRates(rates);
         this.onExperimentConnect.emit({});
       });
+  }
+
+  watchPresence() {
+    this.socketService.channel.on('presence_diff', (diff) => {
+      this.socketService.channel.push('presence_diff', diff);
+    });
   }
 
   sendRate(event) {
