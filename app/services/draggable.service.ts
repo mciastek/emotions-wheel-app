@@ -61,7 +61,7 @@ export class DraggableService {
 
   reversedDraggablePosition(position) {
     return {
-      x: (position.x * this.dropzoneDimensions.width),
+      x: (position.x * this.dropzoneDimensions.width) + this.dropzoneDimensions.left,
       y: (position.y * this.dropzoneDimensions.height)
     };
   }

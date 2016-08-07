@@ -8,6 +8,7 @@ import { Photo } from '../../models';
 })
 export class PhotoSidebarComponent implements AfterViewChecked {
   private columns: number;
+  private padding: number;
 
   @Input() photos: Photo[];
   @Input() showGalleryButton: boolean;
@@ -15,6 +16,7 @@ export class PhotoSidebarComponent implements AfterViewChecked {
 
   constructor() {
     this.columns = 4;
+    this.padding = 5;
   }
 
   ngAfterViewChecked() {
@@ -67,8 +69,11 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   private getCoordsByIndex(el, index) {
     const elementRect = el.getBoundingClientRect();
 
-    const x = elementRect.width * (index % this.columns);
-    const y = Math.floor(index / this.columns) * elementRect.height;
+    const hm = index % this.columns;
+    const vm = Math.floor(index / this.columns);
+
+    const x = (hm * elementRect.width) + ((hm + 1) * this.padding);
+    const y = (vm * elementRect.height) + ((vm + 1) * this.padding);
 
     return { x, y };
   }

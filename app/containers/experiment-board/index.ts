@@ -72,7 +72,7 @@ export class ExperimentBoard implements OnInit {
   }
 
   ngOnInit() {
-    this.draggableService.init('emotions-wheel', '.photo-item', {
+    this.draggableService.init('.emotions-wheel__board', '.photo-item', {
       onDragStart: this.onDragStart.bind(this),
       onDragEnd: this.sendRate.bind(this),
       onDraggableDoubleTap: this.showPhotoModal.bind(this),
