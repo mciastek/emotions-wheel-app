@@ -40,12 +40,7 @@
     "ionic-plugin-keyboard"
   ],
   "cordovaPlatforms": [
-    "ios",
-    {
-      "platform": "ios",
-      "version": "",
-      "locator": "ios"
-    }
+    "android"
   ],
   "name": "emotions_wheel_app",
   "description": "emotions_wheel_app: An Ionic project"
