@@ -53,8 +53,14 @@ export class ExperimentBoard implements OnInit {
     return this.experiment.kind === 'free_mode';
   }
 
+  get filteredPhotos() {
+    return this.photos.filter((photo) => {
+      return photo.author_type === 'researcher' || photo.author_id === this.participant.id;
+    });
+  }
+
   get photoCollection() {
-    return this.photos.map((photo) => {
+    return this.filteredPhotos.map((photo) => {
       const rate = this.rateByPhoto(photo.id);
 
       if (rate) {

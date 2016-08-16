@@ -4,7 +4,7 @@ export interface Photo {
   original: string;
   thumb: string;
   author_type: string;
-  author_id: string;
+  author_id: number;
 
   x?: number;
   y?: number;
