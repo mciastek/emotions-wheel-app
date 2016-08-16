@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angu
 import { Observable, Subscribable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { Modal, Content } from 'ionic-angular';
-import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Experiment, Participant, Photo, Rate } from '../../models';
 
@@ -21,8 +21,7 @@ import { DraggableService, SocketService, ToastService } from '../../services';
     PhotoSidebarComponent
   ],
   providers: [
-    ToastService,
-    TranslatePipe
+    ToastService
   ]
 })
 export class ExperimentBoard implements OnInit {
@@ -32,7 +31,7 @@ export class ExperimentBoard implements OnInit {
   public imageUrl: string;
 
   constructor(
-    private translatePipe: TranslatePipe,
+    private translate: TranslateService,
     private uiActions: UIActions,
     private ratesActions: RatesActions,
     private store: Store<AppState>,
@@ -154,7 +153,7 @@ export class ExperimentBoard implements OnInit {
   }
 
   private rateSubmissionResponse({ rates, experiment_completed }) {
-    const successMsg = this.translatePipe.transform('experimentBoard.rateSuccess');
+    const successMsg = this.translate.instant('experimentBoard.rateSuccess');
 
     if (!experiment_completed) {
       this.toastService.show(successMsg);
@@ -192,7 +191,7 @@ export class ExperimentBoard implements OnInit {
 
   private translatedErrors(errors) {
     return errors.map((e) => {
-      return this.translatePipe.transform(`experimentBoard.errors.${e.type}`);
+      return this.translate.instant(`experimentBoard.errors.${e.type}`);
     });
   }
 }

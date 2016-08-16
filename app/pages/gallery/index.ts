@@ -2,7 +2,7 @@ import { Component, AfterViewInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { NavController } from 'ionic-angular';
 import { Observable, Subscribable } from 'rxjs/Observable';
-import { TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import * as moment from 'moment';
 
 import { Camera } from 'ionic-native';
@@ -20,8 +20,7 @@ import { PhotoGallery } from '../../containers';
   directives: [PhotoGallery],
   providers: [
     ToastService,
-    PhotoUploadService,
-    TranslatePipe
+    PhotoUploadService
   ]
 })
 export class GalleryPage implements AfterViewInit {
@@ -40,7 +39,7 @@ export class GalleryPage implements AfterViewInit {
   constructor(
     private nav: NavController,
     private store: Store<AppState>,
-    private translatePipe: TranslatePipe,
+    private translate: TranslateService,
     private toastService: ToastService,
     private photoUploadService: PhotoUploadService,
     private photosService: PhotosService,
@@ -89,7 +88,7 @@ export class GalleryPage implements AfterViewInit {
   }
 
   private uploadSuccess({ photos }) {
-    const message = this.translatePipe.transform('gallery.uploadSuccess');
+    const message = this.translate.instant('gallery.uploadSuccess');
     this.toastService.show(message);
     this.loadPhotos(photos);
   }

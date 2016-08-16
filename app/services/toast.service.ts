@@ -4,11 +4,10 @@ import { NavController, Toast } from 'ionic-angular';
 
 @Injectable()
 export class ToastService {
-  private toast: Toast;
-  constructor(private navController: NavController) {}
+  constructor(private nav: NavController) {}
 
   show(message) {
-    this.toast = Toast.create({
+    const toast = Toast.create({
       message: message,
       position: 'bottom',
       duration: 3000,
@@ -17,6 +16,6 @@ export class ToastService {
       dismissOnPageChange: true
     });
 
-    this.navController.present(this.toast);
+    this.nav.present(toast);
   }
 }

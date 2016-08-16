@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { TranslateService, TranslatePipe } from 'ng2-translate/ng2-translate';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 import 'rxjs/add/operator/filter';
 
 import { NavController, Toast, Alert } from 'ionic-angular';
@@ -28,8 +28,7 @@ import { FinishedPage } from '../finished';
     GeneralWelcomeComponent
   ],
   providers: [
-    ToastService,
-    TranslatePipe
+    ToastService
   ]
 })
 export class WelcomePage implements OnInit {
@@ -40,7 +39,6 @@ export class WelcomePage implements OnInit {
   constructor(
     private nav: NavController,
     private translate: TranslateService,
-    private translatePipe: TranslatePipe,
     private authService: AuthService,
     private toastService: ToastService,
     private loaderService: LoaderService,
@@ -62,15 +60,13 @@ export class WelcomePage implements OnInit {
   }
 
   scanSuccess({ token }) {
-    const errorMessage = this.translatePipe.transform('login.toasts.qrInvalid');
-
     if (token) {
       this.authenticateWithToken(token, () => {
-        const successMessage = this.translatePipe.transform('login.toasts.qrSuccess');
-
+        const successMessage = this.translate.instant('login.toasts.qrSuccess');
         this.toastService.show(successMessage);
       });
     } else {
+      const errorMessage = this.translate.instant('login.toasts.qrInvalid');
       this.toastService.show(errorMessage);
     }
   }
@@ -101,11 +97,11 @@ export class WelcomePage implements OnInit {
               this.nav.push(FinishedPage);
 
             } else {
+              this.isLogged = true;
+
               if (showToast) {
                 showToast();
               }
-
-              this.isLogged = true;
             }
           });
       }, this.authError.bind(this));
@@ -113,7 +109,7 @@ export class WelcomePage implements OnInit {
 
   private authError(res) {
     const error = res.json().error;
-    const errorMessage = this.translatePipe.transform('login.toasts.qrInvalid');
+    const errorMessage = this.translate.instant('login.toasts.qrInvalid');
     const message = (error.type === 'invalid') ? errorMessage : error;
 
     this.toastService.show(message);
@@ -141,7 +137,7 @@ export class WelcomePage implements OnInit {
   }
 
   private setLoader() {
-    const message = this.translatePipe.transform('welcome.loader');
+    const message = this.translate.instant('welcome.loader');
 
     this.loaderService.create(message);
   }

@@ -25,7 +25,6 @@ import { WelcomePage } from './pages/welcome';
       useFactory: (http: Http) => new TranslateStaticLoader(http, 'build/assets/i18n', '.json'),
       deps: [Http]
     },
-    TranslatePipe,
     TranslateService
   ]
 })
@@ -38,8 +37,7 @@ export class MyApp implements AfterViewInit {
 
   constructor(
     private platform: Platform,
-    private translate: TranslateService,
-    private translatePipe: TranslatePipe
+    private translate: TranslateService
   ) {
     this.rootPage = WelcomePage;
 
@@ -70,10 +68,10 @@ export class MyApp implements AfterViewInit {
 
   private showDisconnectAlert() {
     const alert = Alert.create({
-      title: this.translatePipe.transform('login.alerts.noConnection.title'),
-      subTitle: this.translatePipe.transform('login.alerts.noConnection.message'),
+      title: this.translate.instant('login.alerts.noConnection.title'),
+      subTitle: this.translate.instant('login.alerts.noConnection.message'),
       buttons: [
-        this.translatePipe.transform('login.alerts.noConnection.button')
+        this.translate.instant('login.alerts.noConnection.button')
       ]
     });
 
