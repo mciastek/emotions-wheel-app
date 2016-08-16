@@ -51,10 +51,6 @@ export class WelcomePage implements OnInit {
 
     this.participant$ = this.store.let(getParticipant());
     this.experiment$ = this.store.let(getExperiment());
-
-    this.experiment$
-      .filter(e => typeof e.id !==  'undefined')
-      .subscribe((e) => this.checkIfExperimentFinished(e));
   }
 
   ngOnInit() {
@@ -94,18 +90,23 @@ export class WelcomePage implements OnInit {
       .subscribe((res) => {
         const { code } = res.participant.language;
 
+        localStorage.setItem('token', token);
+
         this.setParticipant(res.participant);
         this.setExperiment(res.experiment);
 
-        localStorage.setItem('token', token);
-
         this.setLanguage(code)
           .subscribe(() => {
-            if (showToast) {
-              showToast();
-            }
+            if (this.experimentFinished(res.experiment)) {
+              this.nav.push(FinishedPage);
 
-            this.isLogged = true;
+            } else {
+              if (showToast) {
+                showToast();
+              }
+
+              this.isLogged = true;
+            }
           });
       }, this.authError.bind(this));
   }
@@ -135,12 +136,8 @@ export class WelcomePage implements OnInit {
     return this.translate.use(language);
   }
 
-  private checkIfExperimentFinished(experiment: Experiment) {
-    const isFinished = experiment.has_completed || !experiment.is_active;
-
-    if (isFinished && localStorage.getItem('token')) {
-      this.nav.push(FinishedPage, { experiment });
-    }
+  private experimentFinished(experiment: Experiment) {
+    return experiment.has_completed || !experiment.is_active;
   }
 
   private setLoader() {

@@ -17,6 +17,7 @@ import { ExperimentToolbarComponent, ResearcherContactComponent } from '../../co
 import { ExperimentBoard, BoardOverlay } from '../../containers';
 
 import { GalleryPage } from '../gallery';
+import { FinishedPage } from '../finished';
 
 @Component({
   templateUrl: 'build/pages/home/template.html',
@@ -76,5 +77,6 @@ export class HomePage {
 
   goToFinished() {
     this.store.dispatch(this.experimentActions.setAsCompleted());
+    this.nav.push(FinishedPage);
   }
 }
