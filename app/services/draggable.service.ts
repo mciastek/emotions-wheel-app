@@ -13,7 +13,7 @@ export class DraggableService {
   public onDragStart: Function;
   public onDragEnd: Function;
   public onDrop: Function;
-  public onDraggableDoubleTap: Function;
+  public onHold: Function;
 
   public contentView: Content;
 
@@ -29,7 +29,7 @@ export class DraggableService {
       this.onDragEnd = params.onDragEnd;
       this.onDrop = params.onDrop;
       this.contentView = params.contentView;
-      this.onDraggableDoubleTap = params.onDraggableDoubleTap;
+      this.onHold = params.onHold;
     }
 
     this.enable();
@@ -49,13 +49,20 @@ export class DraggableService {
     const contentDimensions = this.contentView.getContentDimensions();
 
     const draggableCoords = {
+      width: draggable.getBoundingClientRect().width,
+      height: draggable.getBoundingClientRect().height,
       top: draggable.getBoundingClientRect().top + contentDimensions.scrollTop,
       left: draggable.getBoundingClientRect().left + contentDimensions.scrollLeft,
     };
 
+    const draggableToCenter = {
+      left: draggableCoords.left + (draggableCoords.width / 2),
+      top: draggableCoords.top + (draggableCoords.height / 2),
+    };
+
     return {
-      x: Math.abs(this.dropzoneDimensions.left - draggableCoords.left) / this.dropzoneDimensions.width,
-      y: Math.abs(this.dropzoneDimensions.top - draggableCoords.top) / this.dropzoneDimensions.height,
+      x: Math.abs(this.dropzoneDimensions.left - draggableToCenter.left) / this.dropzoneDimensions.width,
+      y: Math.abs(this.dropzoneDimensions.top - draggableToCenter.top) / this.dropzoneDimensions.height,
     };
   }
 
@@ -89,12 +96,15 @@ export class DraggableService {
         },
         onstart: this.onDragStart,
         onmove: this.updateDraggablePosition,
-        onend: this.onDragEnd
+        onend: (event) => {
+          this.updateDraggableTransform(event);
+          this.onDragEnd(event);
+        }
       });
 
-    if (this.onDraggableDoubleTap) {
+    if (this.onHold) {
       this.interact(this.draggableSelector)
-        .on('doubletap', this.onDraggableDoubleTap);
+        .on('hold', this.onHold);
     }
   }
 
@@ -118,5 +128,14 @@ export class DraggableService {
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+  }
+
+  private updateDraggableTransform(event) {
+    const target = event.target;
+
+    const x = parseFloat(target.getAttribute('data-x'));
+    const y = parseFloat(target.getAttribute('data-y'));
+
+    target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.5)`;
   }
 }

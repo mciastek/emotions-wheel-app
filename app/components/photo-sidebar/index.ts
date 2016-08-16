@@ -15,7 +15,7 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   @Output() galleryButtonClick = new EventEmitter();
 
   constructor() {
-    this.columns = 4;
+    this.columns = 2;
     this.padding = 5;
   }
 
@@ -33,17 +33,18 @@ export class PhotoSidebarComponent implements AfterViewChecked {
      .filter(p => !!p.x && !!p.y)
      .forEach((photo) => {
         const photoElement = <HTMLElement>document.querySelector(`[data-photo-id="${photo.id}"]`);
-
-        const x = (photo.x || 0);
-        const y = (photo.y || 0);
+        const photoElementRect = photoElement.getBoundingClientRect();
 
         if (!photoElement) return;
+
+        const x = (photo.x || 0) - photoElementRect.width / 2;
+        const y = (photo.y || 0) - photoElementRect.height / 2;
 
         photoElement.setAttribute('data-x', x.toString());
         photoElement.setAttribute('data-y', y.toString());
         photoElement.classList.add('in-dropzone');
 
-        photoElement.style.webkitTransform = photoElement.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+        photoElement.style.webkitTransform = photoElement.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.5)`;
      });
   }
 
