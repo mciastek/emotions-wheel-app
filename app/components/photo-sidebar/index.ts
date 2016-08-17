@@ -26,9 +26,7 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   @Input() showGalleryButton: boolean;
   @Output() galleryButtonClick = new EventEmitter();
 
-  constructor(
-    el: ElementRef
-  ) {
+  constructor(el: ElementRef) {
     this.el = el.nativeElement;
 
     this.columns = 2;
@@ -74,9 +72,10 @@ export class PhotoSidebarComponent implements AfterViewChecked {
 
   private checkScrollNavigation() {
     const photoElements = this.photosInSidebar;
-    const buttonElement = this.el.querySelector('.photo-sidebar__button');
 
     if (photoElements.length === 0) return;
+
+    const buttonElement = this.el.querySelector('.photo-sidebar__button');
 
     const photoElementRect = photoElements[0].getBoundingClientRect();
     const sidebarRect = this.el.getBoundingClientRect();
@@ -86,8 +85,12 @@ export class PhotoSidebarComponent implements AfterViewChecked {
     const photoElementsTotalHeight = lastPhotoElementCoords.y + photoElementRect.height;
     const availableVerticalSpace = sidebarRect.height - buttonHeight;
 
-    this.scrollLimit = Math.ceil((photoElementsTotalHeight - availableVerticalSpace) / photoElementRect.height);
+    this.scrollLimit = Math.round((photoElementsTotalHeight - availableVerticalSpace) / photoElementRect.height);
     this.navigationVisible = photoElementsTotalHeight > availableVerticalSpace;
+
+    if (!this.navigationVisible) {
+      this.scrollH = 0;
+    }
   }
 
   private updatePhotoElementsPosition() {

@@ -1,7 +1,7 @@
-import { PLATFORM_PIPES, Component, ViewChild, AfterViewInit } from '@angular/core';
+import { PLATFORM_PIPES, Component, ViewChild } from '@angular/core';
 import { HTTP_PROVIDERS, Http } from '@angular/http';
-import { Platform, ionicBootstrap, Alert, NavController } from 'ionic-angular';
-import { StatusBar, Network } from 'ionic-native';
+import { Platform, ionicBootstrap } from 'ionic-angular';
+import { StatusBar } from 'ionic-native';
 import { provideStore } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { TranslatePipe, TranslateService, TranslateLoader, TranslateStaticLoader } from 'ng2-translate/ng2-translate';
@@ -28,12 +28,9 @@ import { WelcomePage } from './pages/welcome';
     TranslateService
   ]
 })
-export class MyApp implements AfterViewInit {
+export class MyApp {
   private rootPage: any;
   private language: string;
-  private disconnectSubscription: Subscription;
-
-  @ViewChild('nav') nav: NavController;
 
   constructor(
     private platform: Platform,
@@ -42,7 +39,6 @@ export class MyApp implements AfterViewInit {
     this.rootPage = WelcomePage;
 
     translate.setDefaultLang('en');
-
     this.setLanguage();
 
     translate.use(this.language);
@@ -54,28 +50,11 @@ export class MyApp implements AfterViewInit {
     });
   }
 
-  ngAfterViewInit() {
-    this.disconnectSubscription = Network.onDisconnect()
-      .subscribe(this.showDisconnectAlert.bind(this));
-  }
-
   private setLanguage() {
     const userLang = navigator.language.split('-')[0];
     const langRegex = new RegExp(`(${config.languages.join('|')})`, 'gi');
 
     this.language = langRegex.test(userLang) ? userLang : 'en';
-  }
-
-  private showDisconnectAlert() {
-    const alert = Alert.create({
-      title: this.translate.instant('login.alerts.noConnection.title'),
-      subTitle: this.translate.instant('login.alerts.noConnection.message'),
-      buttons: [
-        this.translate.instant('login.alerts.noConnection.button')
-      ]
-    });
-
-    this.nav.present(alert);
   }
 }
 

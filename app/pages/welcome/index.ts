@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 import 'rxjs/add/operator/filter';
 
@@ -31,10 +32,11 @@ import { FinishedPage } from '../finished';
     ToastService
   ]
 })
-export class WelcomePage implements OnInit {
+export class WelcomePage implements OnInit, OnDestroy {
   public isLogged: Boolean = false;
   public participant$: Observable<Participant>;
   public experiment$: Observable<Experiment>;
+  private disconnectSubscription: Subscription;
 
   constructor(
     private nav: NavController,
@@ -57,6 +59,13 @@ export class WelcomePage implements OnInit {
     if (token) {
       this.authenticateWithToken(token);
     }
+
+    this.disconnectSubscription = Network.onDisconnect()
+      .subscribe(this.showDisconnectAlert.bind(this));
+  }
+
+  ngOnDestroy() {
+    this.disconnectSubscription.unsubscribe();
   }
 
   scanSuccess({ token }) {
@@ -140,5 +149,17 @@ export class WelcomePage implements OnInit {
     const message = this.translate.instant('welcome.loader');
 
     this.loaderService.create(message);
+  }
+
+  private showDisconnectAlert() {
+    const alert = Alert.create({
+      title: this.translate.instant('login.alerts.noConnection.title'),
+      subTitle: this.translate.instant('login.alerts.noConnection.message'),
+      buttons: [
+        this.translate.instant('login.alerts.noConnection.button')
+      ]
+    });
+
+    this.nav.present(alert);
   }
 }
