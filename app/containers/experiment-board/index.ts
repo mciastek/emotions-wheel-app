@@ -12,7 +12,7 @@ import { AppState } from '../../reducers';
 
 import { EmotionsWheelComponent, PhotoSidebarComponent } from '../../components';
 
-import { DraggableService, SocketService, ToastService } from '../../services';
+import { DraggableService, SocketService, ToastService, WheelMapperService } from '../../services';
 
 @Component({
   selector: 'experiment-board',
@@ -38,7 +38,8 @@ export class ExperimentBoard implements OnInit {
     private store: Store<AppState>,
     private socketService: SocketService,
     private draggableService: DraggableService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private wheelMapperService: WheelMapperService
   ) {}
 
   @Input() photos: Photo[];
@@ -124,8 +125,10 @@ export class ExperimentBoard implements OnInit {
     const photoId = parseInt(draggable.getAttribute('data-photo-id'));
     const position = this.draggableService.draggablePosition(draggable);
 
+    const label = this.wheelMapperService.getNearestLabel(position);
+
     const rate: Rate = {
-      name: '',
+      name: label,
       pos_x: position.x,
       pos_y: position.y,
       start_time: this.convertDate(this.dragStartTime),

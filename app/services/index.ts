@@ -5,6 +5,7 @@ import { ToastService } from './toast.service';
 import { PhotoUploadService } from './photo-upload.service';
 import { PhotosService } from './photos.service';
 import { LoaderService } from './loader.service';
+import { WheelMapperService } from './wheel-mapper.service';
 
 export {
   AuthService,
@@ -13,7 +14,8 @@ export {
   ToastService,
   PhotoUploadService,
   PhotosService,
-  LoaderService
+  LoaderService,
+  WheelMapperService
 };
 
 export default [
@@ -23,5 +25,6 @@ export default [
   ToastService,
   PhotoUploadService,
   PhotosService,
-  LoaderService
+  LoaderService,
+  WheelMapperService
 ];
