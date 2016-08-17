@@ -55,10 +55,6 @@ export class HomePage {
     });
   }
 
-  ionViewWillLeave() {
-    this.socketService.channel.leave();
-  }
-
   dismissLoader() {
     this.loaderService.dismiss();
   }

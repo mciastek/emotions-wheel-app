@@ -92,6 +92,7 @@ export class ExperimentBoard implements OnInit {
   }
 
   ngOnDestroy() {
+    this.socketService.disconnect();
     this.draggableService.destroy();
   }
 
@@ -100,6 +101,7 @@ export class ExperimentBoard implements OnInit {
     const { id:participantId } = this.participant;
 
     this.socketService.connect();
+
     return this.socketService.join('participant:experiment', {
       experiment_id: experimentId,
       participant_id: participantId
