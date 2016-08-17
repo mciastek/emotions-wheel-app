@@ -86,6 +86,8 @@ export class DraggableService {
   }
 
   private setDraggable() {
+    interact.pointerMoveTolerance(7);
+
     this.interact(this.draggableSelector)
       .draggable({
         inertia: true,
@@ -101,6 +103,7 @@ export class DraggableService {
           this.onDragEnd(event);
         }
       });
+
 
     if (this.onHold) {
       this.interact(this.draggableSelector)

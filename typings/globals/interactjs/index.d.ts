@@ -233,6 +233,7 @@ declare namespace Interact {
         styleCursor(): boolean;
         styleCursor(newValue: boolean): InteractStatic;
         supportsTouch(): boolean
+        pointerMoveTolerance(newValue: number);
     }
 }
 
