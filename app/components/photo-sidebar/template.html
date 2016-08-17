@@ -1,5 +1,5 @@
 <div class="photo-sidebar__list">
-  <div class="photo-item" *ngFor="let photo of photos" [attr.data-photo-id]="photo.id">
+  <div class="photo-item" *ngFor="#photo of photos" [attr.data-photo-id]="photo.id">
     <img src="{{photo.thumb}}" alt="{{photo.name}}" class="photo-item__image" />
   </div>
 </div>

@@ -14,8 +14,18 @@ photo-sidebar {
     position: absolute;
     bottom: 0;
     right: 0;
+    z-index: 5;
     margin: 0;
     width: $photo-sidebar-width;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 50%;
+    right: $photo-sidebar-width + 5px;
+    transform: translate(0, -50%);
   }
 }
 
@@ -23,7 +33,7 @@ photo-sidebar {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9;
+  z-index: 4;
   width: 200px;
   height: 200px;
   transform-origin: 50% 50%;

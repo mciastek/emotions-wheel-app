@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { Observable, Subscribable } from 'rxjs/Observable';
+
 import { Store } from '@ngrx/store';
 import { Modal, Content } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate/ng2-translate';
