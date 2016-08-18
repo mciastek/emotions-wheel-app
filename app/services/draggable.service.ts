@@ -13,7 +13,7 @@ export class DraggableService {
   public onDragStart: Function;
   public onDragEnd: Function;
   public onDrop: Function;
-  public onHold: Function;
+  public onDraggableDoubleTap: Function;
 
   public contentView: Content;
 
@@ -29,7 +29,7 @@ export class DraggableService {
       this.onDragEnd = params.onDragEnd;
       this.onDrop = params.onDrop;
       this.contentView = params.contentView;
-      this.onHold = params.onHold;
+      this.onDraggableDoubleTap = params.onDraggableDoubleTap;
     }
 
     this.enable();
@@ -105,9 +105,9 @@ export class DraggableService {
       });
 
 
-    if (this.onHold) {
+    if (this.onDraggableDoubleTap) {
       this.interact(this.draggableSelector)
-        .on('hold', this.onHold);
+        .on('doubletap', this.onDraggableDoubleTap);
     }
   }
 
