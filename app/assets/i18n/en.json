@@ -87,7 +87,8 @@
     }
   },
   "photoSidebar": {
-    "galleryButton": "Add a photo"
+    "galleryButton": "Add a photo",
+    "remainingPhotos": "Remaining photos: {{photosNumber}}"
   },
   "researcherContact": {
     "header": "Researcher contact details",

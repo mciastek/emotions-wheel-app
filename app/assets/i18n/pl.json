@@ -27,7 +27,7 @@
   "finished": {
     "header": "To już koniec, {{firstName}}",
     "inactiveMessage": "Eksperyment \"{{experimentName}}\" już się skończył. Weź udział w nowym badaniu.",
-    "completedMessage": "Oceniłeś wszystkie zdjęcia! Dziękujemy za wzięcie udziału w eksperymencie: \"{{experimentName}}\"",
+    "completedMessage": "Oceniłeś/aś wszystkie zdjęcia! Dziękujemy za wzięcie udziału w eksperymencie: \"{{experimentName}}\"",
     "button": "Zacznij kolejny eksperyment"
   },
   "gallery": {
@@ -47,7 +47,7 @@
     "button": "Zamknij"
   },
   "boardOverlay": {
-    "message": "Oceniłeś wszystkie zdjęcia",
+    "message": "Oceniłeś/aś wszystkie zdjęcia",
     "button": "Zakończ eksperyment"
   },
   "emotionsWheel": {
@@ -87,7 +87,8 @@
     }
   },
   "photoSidebar": {
-    "galleryButton": "Dodaj zdjęcie"
+    "galleryButton": "Dodaj zdjęcie",
+    "remainingPhotos": "Pozostałe fotografie: {{photosNumber}}"
   },
   "researcherContact": {
     "header": "Dane kontaktowe badacza",
