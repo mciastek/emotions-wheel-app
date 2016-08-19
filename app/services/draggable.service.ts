@@ -127,7 +127,7 @@ export class DraggableService {
     const x = (parseFloat(target.getAttribute('data-x')) || '0') + event.dx;
     const y = (parseFloat(target.getAttribute('data-y')) || '0') + event.dy;
 
-    target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.6)`;
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
@@ -139,6 +139,6 @@ export class DraggableService {
     const x = parseFloat(target.getAttribute('data-x'));
     const y = parseFloat(target.getAttribute('data-y'));
 
-    target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.5)`;
+    target.style.webkitTransform = target.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.4)`;
   }
 }

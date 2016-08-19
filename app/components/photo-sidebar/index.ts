@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, Output, EventEmitter, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
+import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Photo } from '../../models';
 
@@ -11,33 +12,19 @@ import { DraggableService } from '../../services';
 })
 export class PhotoSidebarComponent implements AfterViewChecked {
   private el: HTMLElement;
-  private columns: number;
-  private padding: number;
 
-  private scrollH: number;
-  private scrollLimit: number;
-  private scrollPosition: number;
-
-  public navigationVisible: boolean;
-  public disableUp: boolean;
-  public disableDown: boolean;
+  public remainingPhotos: number;
 
   @Input() photos: Photo[];
   @Input() showGalleryButton: boolean;
   @Output() galleryButtonClick = new EventEmitter();
 
-  constructor(el: ElementRef) {
+  constructor(
+    el: ElementRef,
+    private translate: TranslateService
+  ) {
     this.el = el.nativeElement;
-
-    this.columns = 2;
-    this.padding = 5;
-    this.scrollH = 0;
-    this.scrollLimit = 0;
-    this.scrollPosition = 0;
-
-    this.navigationVisible = false;
-    this.disableUp = false;
-    this.disableDown = true;
+    this.remainingPhotos = 0;
   }
 
   ngAfterViewChecked() {
@@ -56,41 +43,6 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   public updateSidebarView() {
     this.updatePhotoElementsPosition();
     this.buildPhotosGrid();
-    this.checkScrollNavigation();
-  }
-
-  public scrollPhotos(direction) {
-    const firstPhotoElement = this.el.querySelector('.photo-item');
-    const moveY = firstPhotoElement.getBoundingClientRect().height + this.padding;
-
-    this.scrollPosition += direction;
-    this.scrollH += moveY * direction;
-
-    this.disableUp = this.scrollPosition < 0 && Math.abs(this.scrollPosition) === this.scrollLimit;
-    this.disableDown = this.scrollPosition === 0;
-  }
-
-  private checkScrollNavigation() {
-    const photoElements = this.photosInSidebar;
-
-    if (photoElements.length === 0) return;
-
-    const buttonElement = this.el.querySelector('.photo-sidebar__button');
-
-    const photoElementRect = photoElements[0].getBoundingClientRect();
-    const sidebarRect = this.el.getBoundingClientRect();
-    const buttonHeight = (buttonElement) ? buttonElement.getBoundingClientRect().height : 0;
-
-    const lastPhotoElementCoords = this.getCoordsByIndex(photoElements[photoElements.length - 1], photoElements.length - 1);
-    const photoElementsTotalHeight = lastPhotoElementCoords.y + photoElementRect.height;
-    const availableVerticalSpace = sidebarRect.height - buttonHeight;
-
-    this.scrollLimit = Math.round((photoElementsTotalHeight - availableVerticalSpace) / photoElementRect.height);
-    this.navigationVisible = photoElementsTotalHeight > availableVerticalSpace;
-
-    if (!this.navigationVisible) {
-      this.scrollH = 0;
-    }
   }
 
   private updatePhotoElementsPosition() {
@@ -109,36 +61,36 @@ export class PhotoSidebarComponent implements AfterViewChecked {
         photoElement.setAttribute('data-y', y.toString());
         photoElement.classList.add('in-dropzone');
 
-        photoElement.style.webkitTransform = photoElement.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.5)`;
+        photoElement.style.webkitTransform = photoElement.style.transform = `translate3d(${x}px, ${y}px, 0) scale(0.4)`;
      });
   }
 
   private buildPhotosGrid() {
     const sidebar = this.el;
+    const sidebarRect = this.el.getBoundingClientRect();
+    const buttonElement = this.el.querySelector('.photo-sidebar__button');
+    const buttonElementHeight = (buttonElement) ? buttonElement.getBoundingClientRect().height : 0;
 
     this.photosInSidebar
       .forEach((photoElement, index) => {
-        const coords = this.getCoordsByIndex(photoElement, index);
+        if (index > 0) {
+          photoElement.classList.add('is-hidden');
+        } else {
+          photoElement.classList.remove('is-hidden');
+        }
 
-        const x = coords.x + sidebar.offsetLeft;
-        const y = (coords.y + sidebar.offsetTop) + this.scrollH;
+        const photoElementRect = photoElement.getBoundingClientRect();
+
+        const x = sidebarRect.left + (sidebarRect.width / 2 - photoElementRect.width / 2);
+        const y = (sidebarRect.height / 2 - photoElementRect.height / 2) - buttonElementHeight;
 
         photoElement.setAttribute('data-x', x.toString());
         photoElement.setAttribute('data-y', y.toString());
 
         photoElement.style.webkitTransform = photoElement.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+
       });
-  }
 
-  private getCoordsByIndex(el, index) {
-    const elementRect = el.getBoundingClientRect();
-
-    const hm = index % this.columns;
-    const vm = Math.floor(index / this.columns);
-
-    const x = (hm * elementRect.width) + ((hm + 1) * this.padding);
-    const y = (vm * elementRect.height) + ((vm + 1) * this.padding);
-
-    return { x, y };
+    this.remainingPhotos = this.photosInSidebar.length;
   }
 }

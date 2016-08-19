@@ -19,13 +19,17 @@ photo-sidebar {
     width: $photo-sidebar-width;
   }
 
-  &__nav {
-    display: flex;
-    flex-direction: column;
+  &__counter {
     position: absolute;
-    top: 50%;
-    right: $photo-sidebar-width + 5px;
-    transform: translate(0, -50%);
+    bottom: 15px;
+    right: 0;
+    width: $photo-sidebar-width;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  &__button + &__counter {
+    bottom: 72px;
   }
 }
 
@@ -34,16 +38,21 @@ photo-sidebar {
   top: 0;
   left: 0;
   z-index: 4;
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   transform-origin: 50% 50%;
 
   &__image {
     display: block;
+    width: 100%;
   }
 
   &.in-dropzone {
     overflow: hidden;
     border-radius: 50%;
+  }
+
+  &.is-hidden {
+    visibility: hidden;
   }
 }

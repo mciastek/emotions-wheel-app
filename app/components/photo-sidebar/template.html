@@ -4,17 +4,9 @@
   </div>
 </div>
 
-<div class="photo-sidebar__nav" *ngIf="navigationVisible">
-  <button  class="photo-sidebar__nav-btn" light (click)="scrollPhotos(-1)" [disabled]="disableUp">
-    <ion-icon name="arrow-up"></ion-icon>
-  </button>
-
-  <button  class="photo-sidebar__nav-btn" light (click)="scrollPhotos(1)" [disabled]="disableDown">
-    <ion-icon name="arrow-down"></ion-icon>
-  </button>
-</div>
-
 <button class="photo-sidebar__button" dark large full (click)="buttonClick($event)" *ngIf="showGalleryButton">
   <ion-icon name="images"></ion-icon>
   {{ 'photoSidebar.galleryButton' | translate }}
 </button>
+
+<strong class="photo-sidebar__counter">{{ 'photoSidebar.remainingPhotos' | translate: { photosNumber: remainingPhotos } }}</strong>
