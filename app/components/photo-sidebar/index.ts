@@ -3,8 +3,6 @@ import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Photo } from '../../models';
 
-import { DraggableService } from '../../services';
-
 @Component({
   selector: 'photo-sidebar',
   templateUrl: 'build/components/photo-sidebar/template.html',
@@ -44,7 +42,7 @@ export class PhotoSidebarComponent implements OnInit, AfterViewChecked {
 
   get photosInSidebar() {
     const photoElements = this.el.querySelectorAll('.photo-item');
-    return [].slice.call(photoElements).filter(el => !el.classList.contains('in-dropzone'));
+    return [].slice.call(photoElements).filter(el => !el.classList.contains('in-dropzone') && !el.classList.contains('is-dragged'));
   }
 
   public updateSidebarView() {

@@ -16,6 +16,7 @@ export class DraggableService {
   public onDraggableDoubleTap: Function;
 
   public contentView: Content;
+  public isDragged: boolean;
 
   constructor() {}
 
@@ -86,7 +87,7 @@ export class DraggableService {
   }
 
   private setDraggable() {
-    interact.pointerMoveTolerance(7);
+    interact.pointerMoveTolerance(150);
 
     this.interact(this.draggableSelector)
       .draggable({
@@ -96,9 +97,13 @@ export class DraggableService {
           endOnly: true,
           elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
         },
-        onstart: this.onDragStart,
+        onstart: (event) => {
+          this.isDragged = true;
+          this.onDragStart(event);
+        },
         onmove: this.updateDraggablePosition,
         onend: (event) => {
+          this.isDragged = false;
           this.updateDraggableTransform(event);
           this.onDragEnd(event);
         }
@@ -115,7 +120,8 @@ export class DraggableService {
     this.interact(this.dropZoneSelector)
       .dropzone({
         accept: this.draggableSelector,
-        ondrop: this.onDrop
+        ondrop: this.onDrop,
+        overlap: 'center'
       });
 
     this.dropzone = <HTMLElement>document.querySelector(this.dropZoneSelector);
