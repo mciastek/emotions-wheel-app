@@ -10,6 +10,10 @@ photo-sidebar {
 }
 
 .photo-sidebar {
+  &--hidden-photos .photo-item.in-dropzone {
+    visibility: hidden;
+  }
+
   &__button {
     position: absolute;
     bottom: 0;
@@ -47,6 +51,7 @@ photo-sidebar {
     width: 100%;
   }
 
+  &.is-dragged,
   &.in-dropzone {
     overflow: hidden;
     border-radius: 50%;

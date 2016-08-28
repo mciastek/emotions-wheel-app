@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, Output, EventEmitter, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ElementRef, Input, Output, EventEmitter, OnInit, AfterViewChecked, ChangeDetectionStrategy } from '@angular/core';
 import { TranslateService } from 'ng2-translate/ng2-translate';
 
 import { Photo } from '../../models';
@@ -10,13 +10,14 @@ import { DraggableService } from '../../services';
   templateUrl: 'build/components/photo-sidebar/template.html',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PhotoSidebarComponent implements AfterViewChecked {
+export class PhotoSidebarComponent implements OnInit, AfterViewChecked {
   private el: HTMLElement;
 
   public remainingPhotos: number;
 
   @Input() photos: Photo[];
   @Input() showGalleryButton: boolean;
+  @Input() hideRatedPhotos: boolean;
   @Output() galleryButtonClick = new EventEmitter();
 
   constructor(
@@ -25,6 +26,12 @@ export class PhotoSidebarComponent implements AfterViewChecked {
   ) {
     this.el = el.nativeElement;
     this.remainingPhotos = 0;
+  }
+
+  ngOnInit() {
+    if (this.hideRatedPhotos) {
+      this.el.classList.add('photo-sidebar--hidden-photos');
+    }
   }
 
   ngAfterViewChecked() {

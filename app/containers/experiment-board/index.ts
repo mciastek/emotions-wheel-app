@@ -51,7 +51,7 @@ export class ExperimentBoard implements OnInit {
   @Output() galleryButtonClick = new EventEmitter();
   @Output() onExperimentConnect = new EventEmitter();
 
-  get galleryEnabled() {
+  get freeModeExperiment() {
     return this.experiment.kind === 'free_mode';
   }
 
@@ -81,7 +81,7 @@ export class ExperimentBoard implements OnInit {
   ngOnInit() {
     this.draggableService.init('.emotions-wheel__board', '.photo-item', {
       onDragStart: this.onDragStart.bind(this),
-      onDragEnd: this.sendRate.bind(this),
+      onDragEnd: this.onDragEnd.bind(this),
       onDraggableDoubleTap: this.showPhotoModal.bind(this),
       contentView: this.content
     });
@@ -148,8 +148,14 @@ export class ExperimentBoard implements OnInit {
   }
 
   onDragStart(event) {
-    event.target.classList.add('in-dropzone');
+    event.target.classList.add('is-dragged');
     this.setStartTime(event);
+  }
+
+  onDragEnd(event) {
+    event.target.classList.remove('is-dragged');
+    event.target.classList.add('in-dropzone');
+    this.sendRate(event);
   }
 
   showPhotoModal(event) {
